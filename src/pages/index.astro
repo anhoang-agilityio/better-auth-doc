@@ -1,11 +1,29 @@
 ---
+import type { MetadataType as Metadata } from '@/components/utils/metadata';
 import Welcome from '@/components/welcome.astro';
-import Layout from '@/layouts/layout.astro';
+import Base from '@/layouts/base.astro';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const metadata: Metadata = {
+  title: 'Better Auth Doc',
+  description: 'A documentation for a better auth flow',
+  openGraph: {
+    title: 'Better Auth Doc',
+    description: 'A documentation for a better auth flow',
+    url: 'https://better-auth.dev',
+    siteName: 'Better Auth Doc',
+    images: [
+      {
+        url: 'https://better-auth.dev/og.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
+    type: 'website',
+    locale: 'en_US',
+  },
+};
 ---
 
-<Layout>
+<Base metadata={metadata}>
   <Welcome />
-</Layout>
+</Base>

@@ -1,0 +1,214 @@
+---
+/**
+ * This component generates HTML meta tags for SEO and web application purposes.
+ * It takes a `metadata` object as a prop to customize the meta tags.
+ *
+ * @prop {Metadata} metadata - The metadata object.
+ * @see ./metadata.types.ts for the structure of the Metadata object.
+ */
+import type { Metadata } from './metadata.types';
+
+export type Props = {
+  metadata: Metadata;
+};
+
+const { metadata } = Astro.props;
+
+const formatDetectionContent = () => {
+  if (!metadata.formatDetection) {
+    return null;
+  }
+
+  const parts = Object.entries(metadata.formatDetection)
+    .filter(([, value]) => typeof value !== 'undefined')
+    .map(([key, value]) => `${key}=${value ? 'yes' : 'no'}`);
+
+  return parts.join(', ');
+};
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+{metadata.title && <title>{metadata.title}</title>}
+{
+  metadata.description && (
+    <meta name="description" content={metadata.description} />
+  )
+}
+{metadata.generator && <meta name="generator" content={metadata.generator} />}
+{
+  metadata.applicationName && (
+    <meta name="application-name" content={metadata.applicationName} />
+  )
+}
+{metadata.referrer && <meta name="referrer" content={metadata.referrer} />}
+{
+  metadata.keywords && (
+    <meta name="keywords" content={metadata.keywords.join(', ')} />
+  )
+}
+{
+  metadata.authors &&
+    metadata.authors.map((author) => (
+      <meta name="author" content={author.name} />
+    ))
+}
+{metadata.creator && <meta name="creator" content={metadata.creator} />}
+{metadata.publisher && <meta name="publisher" content={metadata.publisher} />}
+
+{
+  metadata.formatDetection && (
+    <meta name="format-detection" content={formatDetectionContent()} />
+  )
+}
+
+{
+  metadata.alternates && metadata.alternates.canonical && (
+    <link rel="canonical" href={metadata.alternates.canonical} />
+  )
+}
+{
+  metadata.alternates &&
+    metadata.alternates.languages &&
+    Object.entries(metadata.alternates.languages).map(([lang, href]) => (
+      <link rel="alternate" href={href} hreflang={lang} />
+    ))
+}
+
+{metadata.icons && <link rel="icon" href={metadata.icons.icon} />}
+{metadata.icons && <link rel="shortcut icon" href={metadata.icons.shortcut} />}
+{metadata.icons && <link rel="apple-touch-icon" href={metadata.icons.apple} />}
+{
+  metadata.icons &&
+    metadata.icons.other &&
+    metadata.icons.other.map((icon) => <link rel={icon.rel} href={icon.url} />)
+}
+
+{
+  metadata.openGraph && metadata.openGraph.title && (
+    <meta property="og:title" content={metadata.openGraph.title} />
+  )
+}
+{
+  metadata.openGraph && metadata.openGraph.description && (
+    <meta property="og:description" content={metadata.openGraph.description} />
+  )
+}
+{
+  metadata.openGraph && metadata.openGraph.url && (
+    <meta property="og:url" content={metadata.openGraph.url} />
+  )
+}
+{
+  metadata.openGraph && metadata.openGraph.siteName && (
+    <meta property="og:site_name" content={metadata.openGraph.siteName} />
+  )
+}
+{
+  metadata.openGraph &&
+    metadata.openGraph.images &&
+    metadata.openGraph.images.map((image) => (
+      <meta property="og:image" content={image.url} />
+    ))
+}
+{
+  metadata.openGraph && metadata.openGraph.type && (
+    <meta property="og:type" content={metadata.openGraph.type} />
+  )
+}
+{
+  metadata.openGraph && metadata.openGraph.locale && (
+    <meta property="og:locale" content={metadata.openGraph.locale} />
+  )
+}
+
+{
+  metadata.twitter && metadata.twitter.card && (
+    <meta name="twitter:card" content={metadata.twitter.card} />
+  )
+}
+{
+  metadata.twitter && metadata.twitter.site && (
+    <meta name="twitter:site" content={metadata.twitter.site} />
+  )
+}
+{
+  metadata.twitter && metadata.twitter.creator && (
+    <meta name="twitter:creator" content={metadata.twitter.creator} />
+  )
+}
+{
+  metadata.twitter && metadata.twitter.title && (
+    <meta name="twitter:title" content={metadata.twitter.title} />
+  )
+}
+{
+  metadata.twitter && metadata.twitter.description && (
+    <meta name="twitter:description" content={metadata.twitter.description} />
+  )
+}
+{
+  metadata.twitter &&
+    metadata.twitter.images &&
+    metadata.twitter.images.map((image) => (
+      <meta name="twitter:image" content={image} />
+    ))
+}
+
+{
+  metadata.verification && metadata.verification.google && (
+    <meta
+      name="google-site-verification"
+      content={metadata.verification.google}
+    />
+  )
+}
+{
+  metadata.verification && metadata.verification.yahoo && (
+    <meta
+      name="yahoo-site-verification"
+      content={metadata.verification.yahoo}
+    />
+  )
+}
+{
+  metadata.verification && metadata.verification.yandex && (
+    <meta name="yandex-verification" content={metadata.verification.yandex} />
+  )
+}
+{
+  metadata.verification && metadata.verification.me && (
+    <meta name="me" content={metadata.verification.me} />
+  )
+}
+{
+  metadata.verification &&
+    metadata.verification.other &&
+    Object.entries(metadata.verification.other).map(([key, value]) => (
+      <meta name={key} content={value} />
+    ))
+}
+
+{
+  metadata.appleWebApp && (
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+  )
+}
+{
+  metadata.appleWebApp && metadata.appleWebApp.title && (
+    <meta
+      name="apple-mobile-web-app-title"
+      content={metadata.appleWebApp.title}
+    />
+  )
+}
+
+{metadata.category && <meta name="category" content={metadata.category} />}
+
+{
+  metadata.other &&
+    Object.entries(metadata.other).map(([key, value]) => (
+      <meta name={key} content={value} />
+    ))
+}
