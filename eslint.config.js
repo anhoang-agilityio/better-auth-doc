@@ -69,7 +69,7 @@ export default defineConfig([
       'import/no-named-as-default-member': 'off',
       'import/no-named-as-default': 'off',
 
-      // Filename naming rules
+      // File naming rules
       'check-file/filename-naming-convention': [
         'error',
         {
@@ -155,7 +155,7 @@ export default defineConfig([
     },
   },
 
-  // Folder naming convention for source files
+  // Folder naming convention
   {
     files: ['src/**/!(__tests__)/*'],
     plugins: {
