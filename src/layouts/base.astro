@@ -1,0 +1,21 @@
+---
+import '@fontsource/geist-sans';
+import '@/styles/global.css';
+import { Metadata, type MetadataType } from '@/components/utils/metadata';
+
+type Props = {
+  metadata: MetadataType;
+};
+
+const { metadata } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <Metadata metadata={metadata} />
+  </head>
+  <body class="font-geist-sans antialiased">
+    <slot />
+  </body>
+</html>
