@@ -1,0 +1,49 @@
+---
+import { PortableText } from 'astro-portabletext';
+import { sanityClient } from 'sanity:client';
+import '@/styles/global.css';
+
+import InfoBox from '@/components/portable/info-box.astro';
+import CodeMark from '@/components/portable/marks/Code.astro';
+
+const query = `*[_type == "article" && slug.current == $slug][0]{
+  title,
+  description,
+  content
+}`;
+
+const article = await sanityClient.fetch(query, { slug: 'cookies' });
+---
+
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{article ? article.title : 'Draft'}</title>
+  </head>
+  <body>
+    {
+      article ? (
+        <main>
+          <h1 class="text-2xl font-bold uppercase">{article.title}</h1>
+          {article.description && <p>{article.description}</p>}
+          <PortableText
+            value={article.content}
+            components={{
+              type: {
+                infoBox: InfoBox,
+              },
+              mark: {
+                code: CodeMark,
+              },
+            }}
+          />
+        </main>
+      ) : (
+        <main>
+          <p>Article "cookies" not found.</p>
+        </main>
+      )
+    }
+  </body>
+</html>
