@@ -4,7 +4,8 @@ import { sanityClient } from 'sanity:client';
 import '@/styles/global.css';
 
 import InfoBox from '@/components/portable/info-box.astro';
-import CodeMark from '@/components/portable/marks/Code.astro';
+import CodeBlockWrapper from '@/components/portable/code-block-wrapper.astro';
+import CodeMark from '@/components/portable/marks/code.astro';
 
 const query = `*[_type == "article" && slug.current == $slug][0]{
   title,
@@ -32,6 +33,7 @@ const article = await sanityClient.fetch(query, { slug: 'cookies' });
             components={{
               type: {
                 infoBox: InfoBox,
+                codeBlock: CodeBlockWrapper,
               },
               mark: {
                 code: CodeMark,
