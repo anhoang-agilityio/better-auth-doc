@@ -1,0 +1,50 @@
+---
+import { PortableText } from 'astro-portabletext';
+
+import { CodeBlock } from '@/components/portable/code-block';
+import InfoBox from '@/components/portable/info-box.astro';
+import CodeMark from '@/components/portable/marks/code.astro';
+
+type PortableContent = {
+  _type: string;
+} & Record<string, unknown>[];
+
+type StepItem = {
+  title: string;
+  content: PortableContent;
+};
+
+type Props = {
+  node: { items: StepItem[]; headingLevel: number };
+};
+
+const { node } = Astro.props;
+
+const items = node.items;
+const headingLevel = node.headingLevel;
+const HeadingTag = `h${headingLevel}`;
+
+const components = {
+  type: {
+    infoBox: InfoBox,
+    codeBlock: CodeBlock,
+    steps: Steps,
+  },
+  mark: {
+    code: CodeMark,
+  },
+};
+---
+
+{
+  items.length > 0 && (
+    <div class="fd-steps">
+      {items.map((item) => (
+        <div class="fd-step">
+          <HeadingTag>{item.title}</HeadingTag>
+          <PortableText value={item.content} components={components} />
+        </div>
+      ))}
+    </div>
+  )
+}

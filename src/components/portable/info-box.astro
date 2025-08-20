@@ -1,19 +1,18 @@
 ---
 import { PortableText } from 'astro-portabletext';
 
-type PortableTextBlock = {
-  _type: 'block';
-  children?: ({ _type: 'span'; text: string } & Record<string, unknown>)[];
-} & Record<string, unknown>;
+type PortableContent = {
+  _type: string;
+} & Record<string, unknown>[];
 
 type Props = {
-  node: { variant?: 'info' | 'warning'; content?: PortableTextBlock[] };
+  node: { variant: 'info' | 'warning'; content: PortableContent };
 };
 
 const { node } = Astro.props;
 
-const variant = node.variant ?? 'info';
-const contentBlocks = (node.content ?? []) as PortableTextBlock[];
+const variant = node.variant;
+const contentBlocks = node.content;
 const isWarning = variant === 'warning';
 ---
 

@@ -5,6 +5,7 @@ import '@/styles/global.css';
 
 import { CodeBlock } from '@/components/portable/code-block';
 import InfoBox from '@/components/portable/info-box.astro';
+import Steps from '@/components/portable/steps.astro';
 import CodeMark from '@/components/portable/marks/code.astro';
 
 const query = `*[_type == "article" && slug.current == $slug][0]{
@@ -34,6 +35,7 @@ const article = await sanityClient.fetch(query, { slug: 'cookies' });
               type: {
                 infoBox: InfoBox,
                 codeBlock: CodeBlock,
+                steps: Steps,
               },
               mark: {
                 code: CodeMark,
