@@ -3,8 +3,8 @@ import { PortableText } from 'astro-portabletext';
 import { sanityClient } from 'sanity:client';
 import '@/styles/global.css';
 
+import { CodeBlock } from '@/components/portable/code-block';
 import InfoBox from '@/components/portable/info-box.astro';
-import CodeBlockWrapper from '@/components/portable/code-block-wrapper.astro';
 import CodeMark from '@/components/portable/marks/code.astro';
 
 const query = `*[_type == "article" && slug.current == $slug][0]{
@@ -33,7 +33,7 @@ const article = await sanityClient.fetch(query, { slug: 'cookies' });
             components={{
               type: {
                 infoBox: InfoBox,
-                codeBlock: CodeBlockWrapper,
+                codeBlock: CodeBlock,
               },
               mark: {
                 code: CodeMark,

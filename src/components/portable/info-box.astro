@@ -6,11 +6,14 @@ type PortableTextBlock = {
   children?: ({ _type: 'span'; text: string } & Record<string, unknown>)[];
 } & Record<string, unknown>;
 
-const { node } = Astro.props as {
-  node?: { variant?: 'info' | 'warning'; content?: PortableTextBlock[] };
+type Props = {
+  node: { variant?: 'info' | 'warning'; content?: PortableTextBlock[] };
 };
-const variant = node?.variant ?? 'info';
-const contentBlocks = (node?.content ?? []) as PortableTextBlock[];
+
+const { node } = Astro.props;
+
+const variant = node.variant ?? 'info';
+const contentBlocks = (node.content ?? []) as PortableTextBlock[];
 const isWarning = variant === 'warning';
 ---
 

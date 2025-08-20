@@ -1,0 +1,116 @@
+---
+import { createHighlighter } from 'shiki';
+
+import CodeBlock from './code-block';
+
+type CodeBlockNodeWithTabs = {
+  useTabs: true;
+  tabs: Array<{
+    title: string;
+    code: {
+      code: string;
+      language: string;
+      filename?: string;
+    };
+  }>;
+  code?: never;
+};
+
+type CodeBlockNodeWithCode = {
+  useTabs: false;
+  code: {
+    code: string;
+    language: string;
+    filename?: string;
+  };
+  tabs?: never;
+};
+
+type CodeBlockNode = CodeBlockNodeWithTabs | CodeBlockNodeWithCode;
+
+type Props = { node: CodeBlockNode };
+
+const { node } = Astro.props;
+// Supported languages for Shiki highlighting
+const supportedLanguages: string[] = [
+  'jsx',
+  'tsx',
+  'html',
+  'css',
+  'json',
+  'yaml',
+  'markdown',
+  'sql',
+  'sh',
+];
+
+// Ensure language falls back to a safe default
+const resolveLanguage = (language?: string): string =>
+  language && supportedLanguages.includes(language) ? language : 'sh';
+
+type TransformedTab = {
+  value: string;
+  label: string;
+  content: string;
+  filename?: string;
+};
+
+type TabInput = {
+  title: string;
+  code: string;
+  language: string;
+  filename?: string;
+};
+
+const createTabsInput = (): Array<TabInput> => {
+  if (node.useTabs) {
+    return node.tabs.map((tab) => ({
+      title: tab.title,
+      code: tab.code.code,
+      language: resolveLanguage(tab.code.language),
+      filename: tab.code.filename,
+    }));
+  }
+
+  return [
+    {
+      title: 'Code',
+      code: node.code.code,
+      language: resolveLanguage(node.code.language),
+      filename: node.code.filename,
+    },
+  ];
+};
+
+const highlighter = await createHighlighter({
+  langs: supportedLanguages,
+  themes: ['github-light', 'github-dark'],
+});
+
+const tabsInput = createTabsInput();
+
+const transformedTabs: Array<TransformedTab> = tabsInput.map((tab) => {
+  const highlightedHtml = highlighter.codeToHtml(tab.code, {
+    lang: tab.language,
+    themes: {
+      light: 'github-light',
+      dark: 'github-dark',
+    },
+  });
+
+  return {
+    value: tab.title,
+    label: tab.title,
+    content: highlightedHtml,
+    filename: tab.filename,
+  };
+});
+---
+
+{
+  transformedTabs.length > 0 && (
+    <div class="code-block-wrapper">
+      <CodeBlock tabs={transformedTabs} useTabs={node.useTabs} client:load />
+    </div>
+  )
+}
