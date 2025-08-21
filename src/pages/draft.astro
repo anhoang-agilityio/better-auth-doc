@@ -3,16 +3,15 @@ import { PortableText } from 'astro-portabletext';
 import { sanityClient } from 'sanity:client';
 import '@/styles/global.css';
 
-import { CodeBlock } from '@/components/portable/code-block';
-import InfoBox from '@/components/portable/info-box.astro';
-import Steps from '@/components/portable/steps.astro';
-import CodeMark from '@/components/portable/marks/code.astro';
+import { portableTextComponents } from '@/components/portable/portable-text-config';
+
+export const prerender = false;
 
 const query = `*[_type == "article" && slug.current == $slug][0]{
   title,
   description,
   content
-}`;
+  }`;
 
 const article = await sanityClient.fetch(query, { slug: 'cookies' });
 ---
@@ -31,16 +30,7 @@ const article = await sanityClient.fetch(query, { slug: 'cookies' });
           {article.description && <p>{article.description}</p>}
           <PortableText
             value={article.content}
-            components={{
-              type: {
-                infoBox: InfoBox,
-                codeBlock: CodeBlock,
-                steps: Steps,
-              },
-              mark: {
-                code: CodeMark,
-              },
-            }}
+            components={portableTextComponents}
           />
         </main>
       ) : (
