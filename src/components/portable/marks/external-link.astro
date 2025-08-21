@@ -1,0 +1,16 @@
+---
+import type { MarkProps } from 'astro-portabletext/types';
+
+type Props = MarkProps<{ href: string }>;
+
+const { node } = Astro.props as Props;
+const href = node.markDef.href;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="text-blue-600 underline decoration-blue-300 transition-colors duration-200 hover:text-blue-800 hover:decoration-blue-500"
+  ><slot /></a
+>
