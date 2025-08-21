@@ -1,0 +1,10 @@
+---
+import type { ListProps } from 'astro-portabletext/types';
+
+const { node } = Astro.props as ListProps;
+const style = (node as unknown as { listItem?: string }).listItem ?? 'bullet';
+const Tag = style === 'number' ? 'ol' : 'ul';
+const classes = `${Tag === 'ol' ? 'list-decimal' : 'list-disc'} my-6 ml-6`;
+---
+
+<Tag class={classes}><slot /></Tag>
