@@ -1,6 +1,7 @@
 ---
 import { PortableText } from 'astro-portabletext';
 import { sanityClient } from 'sanity:client';
+import '@fontsource/geist-sans';
 import '@fontsource-variable/geist-mono';
 import '@/styles/global.css';
 
@@ -23,7 +24,7 @@ const article = await sanityClient.fetch(query, { slug: 'cookies' });
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{article ? article.title : 'Draft'}</title>
   </head>
-  <body>
+  <body class="font-geist-sans antialiased">
     {
       article ? (
         <main>

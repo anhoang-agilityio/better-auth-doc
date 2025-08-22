@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 type Tab = {
@@ -28,50 +28,48 @@ export default function CodeBlock({
     const only = tabs[0];
     if (!only) return null;
     return (
-      <Card className="my-6">
-        <CardContent className="pt-6">
-          <div className="mt-4">
-            {only.filename && (
-              <div className="mb-3">
-                <span className="inline-block rounded bg-gray-700 px-2 py-1 font-mono text-xs text-gray-300">
-                  {only.filename}
-                </span>
-              </div>
-            )}
-            <div dangerouslySetInnerHTML={{ __html: only.content }} />
+      <Card className="bg-secondary/50 text-sm">
+        {only.filename && (
+          <div className="bg-muted border-b px-4 py-1.5">
+            <span className="text-muted-foreground truncate">
+              {only.filename}
+            </span>
           </div>
-        </CardContent>
+        )}
+        <div
+          className="p-4"
+          dangerouslySetInnerHTML={{ __html: only.content }}
+        />
       </Card>
     );
   }
 
   return (
-    <Card className="my-6">
-      <CardContent className="pt-6">
-        <Tabs defaultValue={defaultValue} className="w-full">
-          <TabsList>
-            {tabs.map((tab) => (
-              <TabsTrigger key={tab.value} value={tab.value}>
-                {tab.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
+    <Card className="bg-secondary/50 text-sm">
+      <Tabs className="gap-0" defaultValue={defaultValue}>
+        <TabsList className="bg-secondary">
           {tabs.map((tab) => (
-            <TabsContent key={tab.value} value={tab.value}>
-              <div className="mt-4">
-                {tab.filename && (
-                  <div className="mb-3">
-                    <span className="inline-block rounded bg-gray-700 px-2 py-1 font-mono text-xs text-gray-300">
-                      {tab.filename}
-                    </span>
-                  </div>
-                )}
-                <div dangerouslySetInnerHTML={{ __html: tab.content }} />
-              </div>
-            </TabsContent>
+            <TabsTrigger key={tab.value} value={tab.value}>
+              {tab.label}
+            </TabsTrigger>
           ))}
-        </Tabs>
-      </CardContent>
+        </TabsList>
+        {tabs.map((tab) => (
+          <TabsContent key={tab.value} value={tab.value}>
+            {tab.filename && (
+              <div className="bg-muted border-y px-4 py-1.5">
+                <span className="text-muted-foreground truncate">
+                  {tab.filename}
+                </span>
+              </div>
+            )}
+            <div
+              className="p-4"
+              dangerouslySetInnerHTML={{ __html: tab.content }}
+            />
+          </TabsContent>
+        ))}
+      </Tabs>
     </Card>
   );
 }
