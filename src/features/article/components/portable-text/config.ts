@@ -7,6 +7,7 @@ import H3 from './blocks/h3.astro';
 import H4 from './blocks/h4.astro';
 import H5 from './blocks/h5.astro';
 import H6 from './blocks/h6.astro';
+import Normal from './blocks/normal.astro';
 import { CodeBlock } from './code-block';
 import InfoBox from './info-box.astro';
 import ListItem from './list/list-item.astro';
@@ -29,6 +30,7 @@ export const portableTextComponents: SomePortableTextComponents = {
     h5: H5,
     h6: H6,
     blockquote: Blockquote,
+    normal: Normal,
   },
   list: {
     bullet: List,

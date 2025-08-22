@@ -96,6 +96,17 @@ const transformedTabs: Array<TransformedTab> = tabsInput.map((tab) => {
       light: 'github-light',
       dark: 'github-dark',
     },
+    colorReplacements: {
+      'github-dark': {
+        '#24292e': 'inherit',
+        '#e1e4e8': 'inherit',
+      },
+      'github-light': {
+        '#24292e': 'inherit',
+        '#defdef': 'inherit',
+        '#fff': 'inherit',
+      },
+    },
   });
 
   return {
