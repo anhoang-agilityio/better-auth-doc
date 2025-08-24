@@ -1,24 +1,24 @@
 import type { SomePortableTextComponents } from 'astro-portabletext/types';
 
-import Blockquote from './blocks/blockquote.astro';
-import H1 from './blocks/h1.astro';
-import H2 from './blocks/h2.astro';
-import H3 from './blocks/h3.astro';
-import H4 from './blocks/h4.astro';
-import H5 from './blocks/h5.astro';
-import H6 from './blocks/h6.astro';
-import Normal from './blocks/normal.astro';
+import Blockquote from './block/blockquote.astro';
+import H1 from './block/h1.astro';
+import H2 from './block/h2.astro';
+import H3 from './block/h3.astro';
+import H4 from './block/h4.astro';
+import H5 from './block/h5.astro';
+import H6 from './block/h6.astro';
+import Normal from './block/normal.astro';
 import { CodeBlock } from './code-block';
 import InfoBox from './info-box.astro';
 import ListItem from './list/list-item.astro';
 import List from './list/list.astro';
-import CodeMark from './marks/code.astro';
-import Em from './marks/em.astro';
-import ExternalLink from './marks/external-link.astro';
-import InternalLink from './marks/internal-link.astro';
-import StrikeThrough from './marks/strike-through.astro';
-import Strong from './marks/strong.astro';
-import Underline from './marks/underline.astro';
+import CodeMark from './mark/code.astro';
+import Em from './mark/em.astro';
+import ExternalLink from './mark/external-link.astro';
+import InternalLink from './mark/internal-link.astro';
+import StrikeThrough from './mark/strike-through.astro';
+import Strong from './mark/strong.astro';
+import Underline from './mark/underline.astro';
 import Steps from './steps.astro';
 
 export const portableTextComponents: SomePortableTextComponents = {
