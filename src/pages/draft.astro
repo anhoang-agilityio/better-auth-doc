@@ -30,10 +30,12 @@ const article = await sanityClient.fetch(query, { slug: 'cookies' });
         <main>
           <h1 class="text-2xl font-bold uppercase">{article.title}</h1>
           {article.description && <p>{article.description}</p>}
-          <PortableText
-            value={article.content}
-            components={portableTextComponents}
-          />
+          <div class="prose">
+            <PortableText
+              value={article.content}
+              components={portableTextComponents}
+            />
+          </div>
         </main>
       ) : (
         <main>

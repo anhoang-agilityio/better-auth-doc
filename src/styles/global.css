@@ -140,3 +140,21 @@
     text-decoration: var(--shiki-dark-text-decoration) !important;
   }
 }
+
+/* Custom prose styles for portable text content */
+.prose > :first-child {
+  margin-top: 0;
+}
+
+.prose > h1 + *,
+.prose > h2 + *,
+.prose > h3 + *,
+.prose > h4 + *,
+.prose > h5 + *,
+.prose > h6 + * {
+  @apply mt-0;
+}
+
+.prose > :last-child {
+  @apply mb-0;
+}

@@ -15,5 +15,7 @@ const { article } = Astro.props;
 >
   <h1 class="text-3xl font-semibold">{article.title}</h1>
   <div class="border-b pb-3"></div>
-  <PortableText value={article.content} components={portableTextComponents} />
+  <div class="prose">
+    <PortableText value={article.content} components={portableTextComponents} />
+  </div>
 </article>
