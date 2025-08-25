@@ -2,6 +2,8 @@
 import type { MarkProps } from 'astro-portabletext/types';
 import { sanityClient } from 'sanity:client';
 
+import Link from '@/components/ui/link.astro';
+
 type Props = MarkProps<{ article: { _ref: string } }>;
 
 const { node } = Astro.props;
@@ -19,8 +21,4 @@ const article = await sanityClient.fetch(articleQuery, {
 const href = `/articles/${article.slug.current}`;
 ---
 
-<a
-  href={href}
-  class="text-blue-600 underline decoration-blue-300 transition-colors duration-200 hover:text-blue-800 hover:decoration-blue-500"
-  title={`Link to: ${article.title}`}><slot /></a
->
+<Link href={href} title={`Link to: ${article.title}`}><slot /></Link>

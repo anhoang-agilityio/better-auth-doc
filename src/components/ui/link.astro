@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+
+import { cn } from '@/lib/utils';
+
+type Props = HTMLAttributes<'a'>;
+
+const { class: className, ...rest } = Astro.props;
+---
+
+<a
+  class={cn(
+    'underline underline-offset-[3.5px] font-medium decoration-[1.5px]',
+    className,
+  )}
+  {...rest}><slot /></a
+>
