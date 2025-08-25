@@ -28,7 +28,7 @@ export default function CodeBlock({
     const only = tabs[0];
     if (!only) return null;
     return (
-      <Card className="bg-secondary/50 text-sm">
+      <Card className="bg-secondary/50 my-6 text-sm">
         {only.filename && (
           <div className="bg-muted border-b px-4 py-1.5">
             <span className="text-muted-foreground truncate">
@@ -37,7 +37,7 @@ export default function CodeBlock({
           </div>
         )}
         <div
-          className="p-4"
+          className="max-h-[600px] overflow-y-auto p-4"
           dangerouslySetInnerHTML={{ __html: only.content }}
         />
       </Card>
@@ -45,7 +45,7 @@ export default function CodeBlock({
   }
 
   return (
-    <Card className="bg-secondary/50 text-sm">
+    <Card className="bg-secondary/50 my-6 text-sm">
       <Tabs className="gap-0" defaultValue={defaultValue}>
         <TabsList className="bg-secondary">
           {tabs.map((tab) => (
@@ -64,7 +64,7 @@ export default function CodeBlock({
               </div>
             )}
             <div
-              className="p-4"
+              className="max-h-[600px] overflow-y-auto p-4"
               dangerouslySetInnerHTML={{ __html: tab.content }}
             />
           </TabsContent>
