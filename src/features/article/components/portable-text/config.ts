@@ -10,8 +10,10 @@ import H6 from './block/h6.astro';
 import Normal from './block/normal.astro';
 import { CodeBlock } from './code-block';
 import InfoBox from './info-box.astro';
-import ListItem from './list/list-item.astro';
-import List from './list/list.astro';
+import BulletListItem from './list/bullet-list-item.astro';
+import BulletList from './list/bullet-list.astro';
+import NumberListItem from './list/number-list-item.astro';
+import NumberList from './list/number-list.astro';
 import CodeMark from './mark/code.astro';
 import Em from './mark/em.astro';
 import ExternalLink from './mark/external-link.astro';
@@ -33,12 +35,12 @@ export const portableTextComponents: SomePortableTextComponents = {
     normal: Normal,
   },
   list: {
-    bullet: List,
-    number: List,
+    bullet: BulletList,
+    number: NumberList,
   },
   listItem: {
-    bullet: ListItem,
-    number: ListItem,
+    bullet: BulletListItem,
+    number: NumberListItem,
   },
   type: {
     infoBox: InfoBox,
