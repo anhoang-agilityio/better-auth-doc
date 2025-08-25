@@ -20,7 +20,7 @@ const isWarning = variant === 'warning';
 ---
 
 <div
-  class="bg-fd-card text-fd-card-foreground border-border my-6 flex flex-row gap-2 rounded-none border border-s-2 border-dashed bg-none p-3 text-sm shadow-md"
+  class="bg-card border-border my-6 flex flex-row gap-2 rounded-none border border-s-2 border-dashed border-l-amber-700/50 bg-none p-3 text-sm shadow-md"
 >
   {
     isWarning ? (
@@ -29,7 +29,7 @@ const isWarning = variant === 'warning';
       <Info className="size-5 fill-blue-500 text-fd-card" />
     )
   }
-  <div class="min-w-0 flex-1">
+  <div class="prose text-muted-foreground min-w-0 flex-1">
     <PortableText value={contentBlocks} components={portableTextComponents} />
   </div>
 </div>
