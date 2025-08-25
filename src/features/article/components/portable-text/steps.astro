@@ -1,9 +1,13 @@
 ---
 import { PortableText } from 'astro-portabletext';
 
-import { CodeBlock } from './code-block';
-import InfoBox from './info-box.astro';
-import CodeMark from './mark/code.astro';
+import H1 from './block/h1.astro';
+import H2 from './block/h2.astro';
+import H3 from './block/h3.astro';
+import H4 from './block/h4.astro';
+import H5 from './block/h5.astro';
+import H6 from './block/h6.astro';
+import { portableTextComponents } from './config';
 
 type PortableContent = {
   _type: string;
@@ -14,35 +18,39 @@ type StepItem = {
   content: PortableContent;
 };
 
+type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
 type Props = {
-  node: { items: StepItem[]; headingLevel: number };
+  node: { items: StepItem[]; headingLevel: HeadingLevel };
 };
 
 const { node } = Astro.props;
 
 const items = node.items;
 const headingLevel = node.headingLevel;
-const HeadingTag = `h${headingLevel}`;
 
-const components = {
-  type: {
-    infoBox: InfoBox,
-    codeBlock: CodeBlock,
-    steps: Steps,
-  },
-  mark: {
-    code: CodeMark,
-  },
+const headingComponents = {
+  1: H1,
+  2: H2,
+  3: H3,
+  4: H4,
+  5: H5,
+  6: H6,
 };
+
+const HeadingComponent = headingComponents[headingLevel];
 ---
 
 {
   items.length > 0 && (
     <div class="fd-steps">
       {items.map((item) => (
-        <div class="fd-step">
-          <HeadingTag>{item.title}</HeadingTag>
-          <PortableText value={item.content} components={components} />
+        <div class="fd-step prose">
+          <HeadingComponent>{item.title}</HeadingComponent>
+          <PortableText
+            value={item.content}
+            components={portableTextComponents}
+          />
         </div>
       ))}
     </div>
