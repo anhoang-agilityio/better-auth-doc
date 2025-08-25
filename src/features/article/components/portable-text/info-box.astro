@@ -4,6 +4,8 @@ import { TriangleAlert, Info } from 'lucide-react';
 
 import { portableTextComponents } from './config';
 
+import { cn } from '@/lib/utils';
+
 type PortableContent = {
   _type: string;
 } & Record<string, unknown>[];
@@ -20,13 +22,17 @@ const isWarning = variant === 'warning';
 ---
 
 <div
-  class="bg-card border-border my-6 flex flex-row gap-2 rounded-none border border-s-2 border-dashed border-l-amber-700/50 bg-none p-3 text-sm shadow-md"
+  class={cn(
+    'bg-card border-border my-6 flex flex-row gap-2 rounded-none border border-s-2 border-dashed border-l-amber-700/50 bg-none p-3 text-sm shadow-md',
+    isWarning && 'border-l-amber-700/50',
+    !isWarning && 'border-l-blue-500/50',
+  )}
 >
   {
     isWarning ? (
       <TriangleAlert className="size-5 fill-orange-500 text-card" />
     ) : (
-      <Info className="size-5 fill-blue-500 text-fd-card" />
+      <Info className="size-5 fill-blue-500 text-card" />
     )
   }
   <div class="prose text-muted-foreground min-w-0 flex-1">
