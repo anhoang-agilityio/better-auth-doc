@@ -14,11 +14,13 @@ import { isPathActive } from '@/utils/paths';
 export type DocsSidebarItem = {
   title: string;
   href: string;
+  iconSvg?: string | null;
 };
 
 export type DocsSidebarCategory = {
   id: string;
   title: string;
+  iconSvg?: string | null;
   items: DocsSidebarItem[];
 };
 
@@ -47,7 +49,18 @@ export function DocsSidebar({ categories, currentPath }: DocsSidebarProps) {
       >
         {categories.map((category) => (
           <AccordionItem key={category.id} value={category.id}>
-            <AccordionTrigger>{category.title}</AccordionTrigger>
+            <AccordionTrigger>
+              <span className="flex items-center gap-x-2.5">
+                {category.iconSvg ? (
+                  <div
+                    className="min-w-4"
+                    aria-hidden
+                    dangerouslySetInnerHTML={{ __html: category.iconSvg }}
+                  />
+                ) : null}
+                {category.title}
+              </span>
+            </AccordionTrigger>
             <AccordionContent>
               <ul className="flex flex-col">
                 {category.items.map((item) => {
@@ -63,6 +76,13 @@ export function DocsSidebar({ categories, currentPath }: DocsSidebarProps) {
                           isActive && 'text-foreground bg-primary/10',
                         )}
                       >
+                        {item.iconSvg ? (
+                          <div
+                            className="min-w-4"
+                            aria-hidden
+                            dangerouslySetInnerHTML={{ __html: item.iconSvg }}
+                          />
+                        ) : null}
                         {item.title}
                       </a>
                     </li>

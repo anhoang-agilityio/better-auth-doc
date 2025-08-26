@@ -14,14 +14,38 @@ const { metadata } = Astro.props;
 
 const categoriesFromCms = await getCategoriesWithArticles();
 
-const categories: DocsSidebarCategory[] = categoriesFromCms.map((category) => ({
-  id: category.id,
-  title: category.title,
-  items: category.items.map((item) => ({
-    title: item.title,
-    href: paths.docs.getHref(item.slug),
-  })),
-}));
+async function fetchSvg(url?: string | null): Promise<string | null> {
+  try {
+    if (!url) return null;
+    const res = await fetch(url);
+    if (!res.ok) return null;
+    const text = await res.text();
+    return text || null;
+  } catch {
+    return null;
+  }
+}
+
+const categories: DocsSidebarCategory[] = await Promise.all(
+  categoriesFromCms.map(async (category) => {
+    const categoryIconSvg = await fetchSvg(category.icon);
+
+    const items = await Promise.all(
+      category.items.map(async (item) => ({
+        title: item.title,
+        href: paths.docs.getHref(item.slug),
+        iconSvg: await fetchSvg(item.icon),
+      })),
+    );
+
+    return {
+      id: category.id,
+      title: category.title,
+      iconSvg: categoryIconSvg,
+      items,
+    } satisfies DocsSidebarCategory;
+  }),
+);
 
 const currentPath = Astro.url.pathname;
 ---

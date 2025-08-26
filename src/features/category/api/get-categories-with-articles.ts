@@ -4,7 +4,7 @@ import { sanityClient } from 'sanity:client';
 type ArticleItem = {
   title: string;
   slug: string;
-  icon: string;
+  icon: string | null;
 };
 
 export type CategoryWithArticles = {
