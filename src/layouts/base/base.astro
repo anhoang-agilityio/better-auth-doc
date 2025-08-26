@@ -2,6 +2,9 @@
 import '@fontsource/geist-sans';
 import '@fontsource-variable/geist-mono';
 import '@/styles/global.css';
+import Header from './header/index.astro';
+
+import InitTheme from '@/components/themes/init-theme.astro';
 import { Metadata, type MetadataType } from '@/components/utils/metadata';
 
 type Props = {
@@ -15,8 +18,10 @@ const { metadata } = Astro.props;
 <html lang="en">
   <head>
     <Metadata metadata={metadata} />
+    <InitTheme />
   </head>
   <body class="font-geist-sans antialiased">
+    <Header />
     <slot />
   </body>
 </html>

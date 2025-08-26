@@ -13,7 +13,9 @@ import '@fontsource/geist-sans/900.css';
 import '@fontsource-variable/geist-mono';
 import '@/styles/global.css';
 
+import InitTheme from '@/components/themes/init-theme.astro';
 import { portableTextComponents } from '@/features/article/components/portable-text/config';
+import Header from '@/layouts/base/header/index.astro';
 
 export const prerender = false;
 
@@ -31,8 +33,10 @@ const article = await sanityClient.fetch(query, { slug: 'installation' });
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{article ? article.title : 'Draft'}</title>
+    <InitTheme />
   </head>
   <body class="font-geist-sans antialiased">
+    <Header />
     {
       article ? (
         <main>

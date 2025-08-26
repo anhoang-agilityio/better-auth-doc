@@ -1,0 +1,65 @@
+---
+import NavigationItem from './navigation-item.astro';
+
+import Logo from '@/assets/logo.svg';
+import ToggleTheme from '@/components/themes/toggle-theme';
+
+const navigation = [
+  {
+    title: 'home',
+    path: '/',
+  },
+  {
+    title: 'docs',
+    path: '/docs',
+  },
+];
+
+const isNavigationActive = (itemPath: string) => {
+  const currentPath = Astro.url.pathname;
+
+  if (itemPath === '/') {
+    return currentPath === '/';
+  }
+
+  return currentPath.startsWith(itemPath);
+};
+---
+
+<header class="bg-background sticky top-0 z-30 w-full border-b">
+  <div class="flex h-14 items-center justify-between">
+    <a
+      href="/"
+      class="text-foreground shrink-0 cursor-pointer px-2.5 py-4 md:w-[268px] md:border-r md:px-5 lg:w-[286px]"
+      aria-label="Homepage"
+    >
+      <div class="flex items-center gap-2">
+        <Logo class="size-5" />
+        <span class="tracking-wide">BETTER-AUTH.</span>
+      </div>
+    </a>
+
+    <nav class="flex items-center">
+      <ul class="hidden w-max shrink-0 items-center divide-x md:flex">
+        {
+          navigation.map((item) => (
+            <NavigationItem
+              href={item.path}
+              isActive={isNavigationActive(item.path)}
+            >
+              {item.title}
+            </NavigationItem>
+          ))
+        }
+        <NavigationItem
+          href="https://github.com/better-auth/better-auth"
+          target="_blank"
+          aria-label="GitHub"
+        >
+          github
+        </NavigationItem>
+      </ul>
+      <ToggleTheme client:load />
+    </nav>
+  </div>
+</header>
