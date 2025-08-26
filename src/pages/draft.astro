@@ -1,6 +1,10 @@
 ---
 import { PortableText } from 'astro-portabletext';
 import { sanityClient } from 'sanity:client';
+
+import { portableTextComponents } from '@/features/article/components/portable-text/config';
+import Docs from '@/layouts/docs/index.astro';
+
 import '@fontsource/geist-sans/100.css';
 import '@fontsource/geist-sans/200.css';
 import '@fontsource/geist-sans/300.css';
@@ -13,11 +17,11 @@ import '@fontsource/geist-sans/900.css';
 import '@fontsource-variable/geist-mono';
 import '@/styles/global.css';
 
-import InitTheme from '@/components/themes/init-theme.astro';
-import { portableTextComponents } from '@/features/article/components/portable-text/config';
-import Header from '@/layouts/base/header/index.astro';
-
 export const prerender = false;
+
+const metadata = {
+  title: 'Draft',
+};
 
 const query = `*[_type == "article" && slug.current == $slug][0]{
   title,
@@ -28,32 +32,10 @@ const query = `*[_type == "article" && slug.current == $slug][0]{
 const article = await sanityClient.fetch(query, { slug: 'installation' });
 ---
 
-<html lang="vi">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{article ? article.title : 'Draft'}</title>
-    <InitTheme />
-  </head>
-  <body class="font-geist-sans antialiased">
-    <Header />
-    {
-      article ? (
-        <main>
-          <h1 class="text-2xl font-bold uppercase">{article.title}</h1>
-          {article.description && <p>{article.description}</p>}
-          <div class="prose">
-            <PortableText
-              value={article.content}
-              components={portableTextComponents}
-            />
-          </div>
-        </main>
-      ) : (
-        <main>
-          <p>Article "cookies" not found.</p>
-        </main>
-      )
-    }
-  </body>
-</html>
+<Docs metadata={metadata}>
+  <h1 class="text-2xl font-bold uppercase">{article.title}</h1>
+  {article.description && <p>{article.description}</p>}
+  <div class="prose">
+    <PortableText value={article.content} components={portableTextComponents} />
+  </div>
+</Docs>

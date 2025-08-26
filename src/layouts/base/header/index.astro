@@ -3,6 +3,7 @@ import NavigationItem from './navigation-item.astro';
 
 import Logo from '@/assets/logo.svg';
 import ToggleTheme from '@/components/themes/toggle-theme';
+import { isPathActive } from '@/utils/paths';
 
 const navigation = [
   {
@@ -14,16 +15,6 @@ const navigation = [
     path: '/docs',
   },
 ];
-
-const isNavigationActive = (itemPath: string) => {
-  const currentPath = Astro.url.pathname;
-
-  if (itemPath === '/') {
-    return currentPath === '/';
-  }
-
-  return currentPath.startsWith(itemPath);
-};
 ---
 
 <header class="bg-background sticky top-0 z-30 w-full border-b">
@@ -45,7 +36,7 @@ const isNavigationActive = (itemPath: string) => {
           navigation.map((item) => (
             <NavigationItem
               href={item.path}
-              isActive={isNavigationActive(item.path)}
+              isActive={isPathActive(Astro.url.pathname, item.path)}
             >
               {item.title}
             </NavigationItem>

@@ -45,7 +45,7 @@ const HeadingComponent = headingComponents[headingLevel];
   items.length > 0 && (
     <div class="fd-steps">
       {items.map((item) => (
-        <div class="fd-step prose">
+        <div class="fd-step">
           <HeadingComponent>{item.title}</HeadingComponent>
           <PortableText
             value={item.content}
