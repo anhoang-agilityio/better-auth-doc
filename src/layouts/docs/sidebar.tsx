@@ -50,7 +50,7 @@ export function DocsSidebar({ categories, currentPath }: DocsSidebarProps) {
         {categories.map((category) => (
           <AccordionItem key={category.id} value={category.id}>
             <AccordionTrigger>
-              <span className="flex items-center gap-x-2.5">
+              <span className="flex items-center gap-x-2">
                 {category.iconSvg ? (
                   <div
                     className="min-w-4"
@@ -68,7 +68,7 @@ export function DocsSidebar({ categories, currentPath }: DocsSidebarProps) {
                     ? isPathActive(currentPath, item.href)
                     : false;
                   return (
-                    <li key={item.href}>
+                    <li key={item.href} className="border-b">
                       <a
                         href={item.href}
                         className={cn(
