@@ -1,10 +1,14 @@
 ---
 import { PortableText } from 'astro-portabletext';
+import type { PortableTextProps } from 'astro-portabletext/types';
 
 import { portableTextComponents } from './portable-text/config';
 
 type Props = {
-  article: any;
+  article: {
+    title: string;
+    content: PortableTextProps['value'];
+  };
 };
 
 const { article } = Astro.props;

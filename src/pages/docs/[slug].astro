@@ -1,0 +1,33 @@
+---
+import type { MetadataType as Metadata } from '@/components/utils/metadata';
+import { getAllArticleSlugs } from '@/features/article/api/get-all-article-slugs';
+import { getArticleBySlug } from '@/features/article/api/get-article-by-slug';
+import Article from '@/features/article/components/article.astro';
+import DocsLayout from '@/layouts/docs/index.astro';
+
+export async function getStaticPaths() {
+  const slugs = await getAllArticleSlugs();
+  return slugs.map((item) => ({ params: { slug: item.slug } }));
+}
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/404');
+}
+
+const article = await getArticleBySlug(slug);
+
+if (!article) {
+  return Astro.redirect('/404');
+}
+
+const metadata: Metadata = {
+  title: article.title,
+  description: article.description,
+};
+---
+
+<DocsLayout metadata={metadata}>
+  <Article article={article} />
+</DocsLayout>

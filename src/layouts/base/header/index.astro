@@ -50,7 +50,7 @@ import { isPathActive } from '@/utils/paths';
         }
       </ul>
       <ToggleTheme client:load />
-      <MobileNavigation currentPath={Astro.url.pathname} client:visible>
+      <MobileNavigation client:visible>
         <slot name="mobile-nav" />
       </MobileNavigation>
     </nav>

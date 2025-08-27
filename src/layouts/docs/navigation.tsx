@@ -69,7 +69,7 @@ export const DocsNavigation = ({
               </span>
             </AccordionTrigger>
             <AccordionContent>
-              <ul className="flex flex-col divide-y pt-0 pb-4 pl-4">
+              <ul className="flex flex-col gap-y-1 divide-y pt-0 pb-4 pl-4">
                 {category.items.map((item) => {
                   const isActive = currentPath
                     ? isPathActive(currentPath, item.href)
@@ -79,7 +79,7 @@ export const DocsNavigation = ({
                       <a
                         href={item.href}
                         className={cn(
-                          'text-muted-foreground hover:text-foreground hover:bg-primary/10 flex items-center gap-x-2.5 py-2 pl-1 text-nowrap break-words transition-colors',
+                          'text-muted-foreground hover:text-foreground hover:bg-primary/10 flex items-center gap-x-2.5 py-1 pl-1 text-nowrap break-words transition-colors',
                           isActive && 'text-foreground bg-primary/10',
                         )}
                       >
