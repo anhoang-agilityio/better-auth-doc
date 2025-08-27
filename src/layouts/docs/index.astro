@@ -1,5 +1,5 @@
 ---
-import { DocsSidebar, type DocsSidebarCategory } from './sidebar';
+import { DocsNavigation, type DocsNavigationCategory } from './navigation';
 
 import type { MetadataType } from '@/components/utils/metadata';
 import { paths } from '@/config/paths';
@@ -26,7 +26,7 @@ async function fetchSvg(url?: string | null): Promise<string | null> {
   }
 }
 
-const categories: DocsSidebarCategory[] = await Promise.all(
+const categories: DocsNavigationCategory[] = await Promise.all(
   categoriesFromCms.map(async (category) => {
     const categoryIconSvg = await fetchSvg(category.icon);
 
@@ -43,7 +43,7 @@ const categories: DocsSidebarCategory[] = await Promise.all(
       title: category.title,
       iconSvg: categoryIconSvg,
       items,
-    } satisfies DocsSidebarCategory;
+    } satisfies DocsNavigationCategory;
   }),
 );
 
@@ -51,12 +51,19 @@ const currentPath = Astro.url.pathname;
 ---
 
 <Base metadata={metadata}>
+  <Fragment slot="mobile-nav">
+    <DocsNavigation
+      client:visible
+      categories={categories}
+      currentPath={currentPath}
+    />
+  </Fragment>
   <div class="flex">
     <aside
-      class="hidden h-[calc(100dvh-56px)] shrink-0 flex-col justify-between overflow-y-auto border-r pb-2 md:flex md:w-[268px] md:transition-all lg:w-[286px]"
+      class="hidden shrink-0 flex-col justify-between overflow-y-auto border-r pb-2 md:flex md:w-[268px] md:transition-all lg:w-[286px]"
     >
-      <DocsSidebar
-        client:load
+      <DocsNavigation
+        client:visible
         categories={categories}
         currentPath={currentPath}
       />

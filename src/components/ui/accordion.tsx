@@ -17,7 +17,7 @@ function AccordionItem({
   return (
     <AccordionPrimitive.Item
       data-slot="accordion-item"
-      className={className}
+      className={cn('px-5', className)}
       {...props}
     />
   );
@@ -33,7 +33,7 @@ function AccordionTrigger({
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          'group flex flex-1 items-center justify-between gap-2 border-b px-5 py-2.5 text-left text-sm transition-all outline-none hover:underline disabled:pointer-events-none disabled:opacity-50',
+          'group flex flex-1 items-center justify-between gap-2 py-2.5 text-left text-sm transition-all outline-none hover:underline disabled:pointer-events-none disabled:opacity-50',
           className,
         )}
         {...props}

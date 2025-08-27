@@ -21,7 +21,9 @@ const { metadata } = Astro.props;
     <InitTheme />
   </head>
   <body class="font-geist-sans antialiased">
-    <Header />
+    <Header>
+      <slot name="mobile-nav" slot="mobile-nav" />
+    </Header>
     <slot />
   </body>
 </html>

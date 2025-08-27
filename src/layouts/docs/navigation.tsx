@@ -11,25 +11,28 @@ import {
 import { cn } from '@/lib/utils';
 import { isPathActive } from '@/utils/paths';
 
-export type DocsSidebarItem = {
+export type DocsNavigationCategoryItem = {
   title: string;
   href: string;
   iconSvg?: string | null;
 };
 
-export type DocsSidebarCategory = {
+export type DocsNavigationCategory = {
   id: string;
   title: string;
   iconSvg?: string | null;
-  items: DocsSidebarItem[];
+  items: DocsNavigationCategoryItem[];
 };
 
-export type DocsSidebarProps = {
-  categories: DocsSidebarCategory[];
+export type DocsNavigationProps = {
+  categories: DocsNavigationCategory[];
   currentPath?: string;
 };
 
-export function DocsSidebar({ categories, currentPath }: DocsSidebarProps) {
+export const DocsNavigation = ({
+  categories,
+  currentPath,
+}: DocsNavigationProps) => {
   const defaultValue = React.useMemo(() => {
     const activeCategory = categories.find((category) =>
       category.items.some((item) =>
@@ -45,10 +48,14 @@ export function DocsSidebar({ categories, currentPath }: DocsSidebarProps) {
         type="single"
         defaultValue={defaultValue}
         collapsible
-        className="w-full"
+        className="w-full divide-y md:border-b"
       >
         {categories.map((category) => (
-          <AccordionItem key={category.id} value={category.id}>
+          <AccordionItem
+            key={category.id}
+            value={category.id}
+            className="px-0 md:px-5"
+          >
             <AccordionTrigger>
               <span className="flex items-center gap-x-2">
                 {category.iconSvg ? (
@@ -62,17 +69,17 @@ export function DocsSidebar({ categories, currentPath }: DocsSidebarProps) {
               </span>
             </AccordionTrigger>
             <AccordionContent>
-              <ul className="flex flex-col">
+              <ul className="flex flex-col divide-y pt-0 pb-4 pl-4">
                 {category.items.map((item) => {
                   const isActive = currentPath
                     ? isPathActive(currentPath, item.href)
                     : false;
                   return (
-                    <li key={item.href} className="border-b">
+                    <li key={item.href}>
                       <a
                         href={item.href}
                         className={cn(
-                          'text-muted-foreground hover:text-foreground hover:bg-primary/10 flex items-center gap-x-2.5 px-5 py-1 text-nowrap break-words transition-colors',
+                          'text-muted-foreground hover:text-foreground hover:bg-primary/10 flex items-center gap-x-2.5 py-2 pl-1 text-nowrap break-words transition-colors',
                           isActive && 'text-foreground bg-primary/10',
                         )}
                       >
@@ -95,4 +102,4 @@ export function DocsSidebar({ categories, currentPath }: DocsSidebarProps) {
       </Accordion>
     </nav>
   );
-}
+};

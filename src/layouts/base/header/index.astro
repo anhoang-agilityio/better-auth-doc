@@ -1,20 +1,11 @@
 ---
-import NavigationItem from './navigation-item.astro';
+import { pages } from './config';
+import MobileNavigation from './mobile-navigation';
 
 import Logo from '@/assets/logo.svg';
 import ToggleTheme from '@/components/themes/toggle-theme';
+import { cn } from '@/lib/utils';
 import { isPathActive } from '@/utils/paths';
-
-const navigation = [
-  {
-    title: 'home',
-    path: '/',
-  },
-  {
-    title: 'docs',
-    path: '/docs',
-  },
-];
 ---
 
 <header class="bg-background sticky top-0 z-30 w-full border-b">
@@ -30,27 +21,38 @@ const navigation = [
       </div>
     </a>
 
-    <nav class="flex items-center">
+    <nav class="flex items-center gap-x-1 md:gap-x-0">
       <ul class="hidden w-max shrink-0 items-center divide-x md:flex">
         {
-          navigation.map((item) => (
-            <NavigationItem
-              href={item.path}
-              isActive={isPathActive(Astro.url.pathname, item.path)}
-            >
-              {item.title}
-            </NavigationItem>
-          ))
+          pages.map((page) => {
+            const isActive = isPathActive(Astro.url.pathname, page.path);
+            return (
+              <li class="group relative">
+                <a
+                  href={page.path}
+                  {...page.attributes}
+                  class={cn(
+                    'group-hover:text-foreground text-muted-foreground block h-full w-full px-5 py-4 transition-colors',
+                    isActive && 'text-foreground',
+                  )}
+                >
+                  {page.title}
+                </a>
+                <div
+                  class={cn(
+                    'bg-muted-foreground absolute bottom-0 h-0.5 w-0 opacity-0 transition-all duration-500 group-hover:w-full group-hover:opacity-100',
+                    isActive && 'w-full opacity-100',
+                  )}
+                />
+              </li>
+            );
+          })
         }
-        <NavigationItem
-          href="https://github.com/better-auth/better-auth"
-          target="_blank"
-          aria-label="GitHub"
-        >
-          github
-        </NavigationItem>
       </ul>
       <ToggleTheme client:load />
+      <MobileNavigation currentPath={Astro.url.pathname} client:visible>
+        <slot name="mobile-nav" />
+      </MobileNavigation>
     </nav>
   </div>
 </header>
