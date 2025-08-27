@@ -1,7 +1,9 @@
 ---
 import type { MetadataType as Metadata } from '@/components/utils/metadata';
+import { getAdjacentArticles } from '@/features/article/api/get-adjacent-articles';
 import { getAllArticleSlugs } from '@/features/article/api/get-all-article-slugs';
 import { getArticleBySlug } from '@/features/article/api/get-article-by-slug';
+import ArticleNavigationCard from '@/features/article/components/article-navigation-card.astro';
 import Article from '@/features/article/components/article.astro';
 import DocsLayout from '@/layouts/docs/index.astro';
 
@@ -22,6 +24,8 @@ if (!article) {
   return Astro.redirect('/404');
 }
 
+const adjacentArticles = await getAdjacentArticles(slug);
+
 const metadata: Metadata = {
   title: article.title,
   description: article.description,
@@ -30,4 +34,27 @@ const metadata: Metadata = {
 
 <DocsLayout metadata={metadata}>
   <Article article={article} />
+
+  {
+    (adjacentArticles.previous || adjacentArticles.next) && (
+      <div class="@container mt-16 grid grid-cols-2 gap-4">
+        <div>
+          {adjacentArticles.previous && (
+            <ArticleNavigationCard
+              article={adjacentArticles.previous}
+              direction="previous"
+            />
+          )}
+        </div>
+        <div>
+          {adjacentArticles.next && (
+            <ArticleNavigationCard
+              article={adjacentArticles.next}
+              direction="next"
+            />
+          )}
+        </div>
+      </div>
+    )
+  }
 </DocsLayout>
