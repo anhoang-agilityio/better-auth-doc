@@ -73,7 +73,7 @@ export default defineConfig([
       'check-file/filename-naming-convention': [
         'error',
         {
-          '**/*.{ts,tsx,astro}': 'KEBAB_CASE',
+          '**/*': 'KEBAB_CASE',
         },
         {
           ignoreMiddleExtensions: true,
@@ -82,6 +82,14 @@ export default defineConfig([
 
       // Other rules
       'linebreak-style': ['error', 'unix'],
+    },
+  },
+
+  // Disable filename rule inside src/pages
+  {
+    files: ['src/pages/**/*'],
+    rules: {
+      'check-file/filename-naming-convention': 'off',
     },
   },
 
@@ -157,7 +165,7 @@ export default defineConfig([
 
   // Folder naming convention
   {
-    files: ['src/**/!(__tests__)/*'],
+    files: ['src/**/*'],
     plugins: {
       'check-file': checkFile,
     },
@@ -165,7 +173,8 @@ export default defineConfig([
       'check-file/folder-naming-convention': [
         'error',
         {
-          '**/*': 'KEBAB_CASE',
+          '!(src/pages)/**/*': 'KEBAB_CASE',
+          '!(**/__tests__)/**/*': 'KEBAB_CASE',
         },
       ],
     },
