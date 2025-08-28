@@ -1,4 +1,4 @@
-import type { SomePortableTextComponents } from 'astro-portabletext/types';
+import type { PortableTextSpan } from 'astro-portabletext/types';
 
 import Blockquote from './block/blockquote.astro';
 import H1 from './block/h1.astro';
@@ -23,7 +23,7 @@ import Strong from './mark/strong.astro';
 import Underline from './mark/underline.astro';
 import Steps from './steps.astro';
 
-export const portableTextComponents: SomePortableTextComponents = {
+export const portableTextComponents: PortableTextSpan = {
   block: {
     h1: H1,
     h2: H2,

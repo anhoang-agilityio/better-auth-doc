@@ -69,7 +69,12 @@ const currentPath = Astro.url.pathname;
       />
     </aside>
     <main class="col-span-12 md:col-span-8 lg:col-span-9">
-      <slot />
+      <slot name="article" />
     </main>
+    <aside
+      class="sticky top-[56px] h-[calc(100dvh-56px)] pt-12 pb-2 max-xl:hidden"
+    >
+      <slot name="table-of-contents" />
+    </aside>
   </div>
 </Base>

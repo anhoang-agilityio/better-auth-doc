@@ -1,27 +1,24 @@
 ---
 import { PortableText } from 'astro-portabletext';
+import type { PortableTextProps, Block } from 'astro-portabletext/types';
 
-import H1 from './block/h1.astro';
-import H2 from './block/h2.astro';
-import H3 from './block/h3.astro';
-import H4 from './block/h4.astro';
-import H5 from './block/h5.astro';
-import H6 from './block/h6.astro';
 import { portableTextComponents } from './config';
 
-type PortableContent = {
-  _type: string;
-} & Record<string, unknown>[];
-
-type StepItem = {
+export type StepItem = {
   title: string;
-  content: PortableContent;
+  content: PortableTextProps['value'];
 };
 
-type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
+export type StepsBlock = {
+  _type: 'steps';
+  items: StepItem[];
+  headingLevel: HeadingLevel;
+};
 
 type Props = {
-  node: { items: StepItem[]; headingLevel: HeadingLevel };
+  node: StepsBlock;
 };
 
 const { node } = Astro.props;
@@ -29,26 +26,30 @@ const { node } = Astro.props;
 const items = node.items;
 const headingLevel = node.headingLevel;
 
-const headingComponents = {
-  1: H1,
-  2: H2,
-  3: H3,
-  4: H4,
-  5: H5,
-  6: H6,
-};
+// Transform each step's title into a PortableText heading block
+const transformedItems = items.map((item) => {
+  const titleBlock: Block = {
+    _type: 'block',
+    style: `h${headingLevel}`,
+    children: [{ _type: 'span', text: item.title }],
+  };
 
-const HeadingComponent = headingComponents[headingLevel];
+  return {
+    titleAndContent: [
+      titleBlock,
+      ...(Array.isArray(item.content) ? item.content : [item.content]),
+    ],
+  };
+});
 ---
 
 {
-  items.length > 0 && (
+  transformedItems.length > 0 && (
     <div class="fd-steps">
-      {items.map((item) => (
+      {transformedItems.map((item) => (
         <div class="fd-step">
-          <HeadingComponent>{item.title}</HeadingComponent>
           <PortableText
-            value={item.content}
+            value={item.titleAndContent}
             components={portableTextComponents}
           />
         </div>

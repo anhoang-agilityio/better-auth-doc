@@ -1,9 +1,18 @@
 ---
+import {
+  extractTextFromChildren,
+  generateId,
+} from '@/features/article/utils/toc';
 
+const { node } = Astro.props;
+
+const text = extractTextFromChildren(node?.children || []);
+const id = generateId(text);
 ---
 
 <h2
-  class="text-foreground mt-[2em] mb-[1em] text-[1.5em] leading-[1.33333] font-semibold"
+  id={id}
+  class="text-foreground mt-[2em] mb-[1em] scroll-mt-16 text-[1.5em] leading-[1.33333] font-semibold"
 >
   <slot />
 </h2>

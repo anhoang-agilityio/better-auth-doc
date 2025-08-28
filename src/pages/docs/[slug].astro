@@ -3,8 +3,10 @@ import type { MetadataType as Metadata } from '@/components/utils/metadata';
 import { getAdjacentArticles } from '@/features/article/api/get-adjacent-articles';
 import { getAllArticleSlugs } from '@/features/article/api/get-all-article-slugs';
 import { getArticleBySlug } from '@/features/article/api/get-article-by-slug';
-import ArticleNavigationCard from '@/features/article/components/article-navigation-card.astro';
 import Article from '@/features/article/components/article.astro';
+import NavigationCard from '@/features/article/components/navigation-card.astro';
+import { TableOfContents } from '@/features/article/components/table-of-contents';
+import { extractTocFromPortableText } from '@/features/article/utils/toc';
 import DocsLayout from '@/layouts/docs/index.astro';
 
 export async function getStaticPaths() {
@@ -25,6 +27,7 @@ if (!article) {
 }
 
 const adjacentArticles = await getAdjacentArticles(slug);
+const tocItems = extractTocFromPortableText(article.content);
 
 const metadata: Metadata = {
   title: article.title,
@@ -33,28 +36,37 @@ const metadata: Metadata = {
 ---
 
 <DocsLayout metadata={metadata}>
-  <Article article={article} />
+  <Fragment slot="article">
+    <div class="flex gap-8">
+      <div class="min-w-0 flex-1">
+        <Article article={article} />
 
-  {
-    (adjacentArticles.previous || adjacentArticles.next) && (
-      <div class="@container mt-16 grid grid-cols-2 gap-4">
-        <div>
-          {adjacentArticles.previous && (
-            <ArticleNavigationCard
-              article={adjacentArticles.previous}
-              direction="previous"
-            />
-          )}
-        </div>
-        <div>
-          {adjacentArticles.next && (
-            <ArticleNavigationCard
-              article={adjacentArticles.next}
-              direction="next"
-            />
-          )}
-        </div>
+        {
+          (adjacentArticles.previous || adjacentArticles.next) && (
+            <div class="@container mt-16 grid grid-cols-2 gap-4">
+              <div>
+                {adjacentArticles.previous && (
+                  <NavigationCard
+                    article={adjacentArticles.previous}
+                    direction="previous"
+                  />
+                )}
+              </div>
+              <div>
+                {adjacentArticles.next && (
+                  <NavigationCard
+                    article={adjacentArticles.next}
+                    direction="next"
+                  />
+                )}
+              </div>
+            </div>
+          )
+        }
       </div>
-    )
-  }
+    </div>
+  </Fragment>
+  <Fragment slot="table-of-contents">
+    <TableOfContents client:load items={tocItems} />
+  </Fragment>
 </DocsLayout>
