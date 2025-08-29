@@ -58,9 +58,9 @@ const currentPath = Astro.url.pathname;
       currentPath={currentPath}
     />
   </Fragment>
-  <div class="flex">
+  <div class="grid grid-flow-col-dense grid-cols-[auto_1fr_auto]">
     <aside
-      class="hidden shrink-0 flex-col justify-between overflow-y-auto border-r pb-2 md:flex md:w-[268px] md:transition-all lg:w-[286px]"
+      class="row-span-2 hidden shrink-0 flex-col justify-between overflow-y-auto border-r pb-2 md:flex md:w-[268px] md:transition-all lg:w-[286px]"
     >
       <DocsNavigation
         client:visible
@@ -68,13 +68,18 @@ const currentPath = Astro.url.pathname;
         currentPath={currentPath}
       />
     </aside>
-    <main class="col-span-12 md:col-span-8 lg:col-span-9">
+    <div
+      class="sticky top-[var(--nav-height)] col-start-2 row-start-1 h-fit xl:hidden"
+    >
+      <slot name="toc-mobile" />
+    </div>
+    <main class="col-start-2 row-start-2">
       <slot name="article" />
     </main>
     <aside
-      class="sticky top-[56px] h-[calc(100dvh-56px)] pt-12 pb-2 max-xl:hidden"
+      class="sticky top-[var(--nav-height)] col-start-3 row-span-2 h-fit max-xl:hidden"
     >
-      <slot name="table-of-contents" />
+      <slot name="toc-desktop" />
     </aside>
   </div>
 </Base>

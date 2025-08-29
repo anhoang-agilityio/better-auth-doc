@@ -2,12 +2,7 @@ import type { PortableTextProps } from 'astro-portabletext/types';
 
 import type { StepsBlock } from '@/features/article/components/portable-text/steps.astro';
 
-export type TocItem = {
-  id: string;
-  text: string;
-  level: number;
-  children: TocItem[];
-};
+import type { TocItem } from '../types/toc';
 
 type PortableTextBlock = {
   _type: string;

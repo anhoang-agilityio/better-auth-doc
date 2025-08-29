@@ -35,7 +35,7 @@ const ToggleTheme = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="size-9 md:h-14 md:w-[3.56rem] md:border-l"
+          className="size-9 md:h-[var(--nav-height)] md:w-[3.56rem] md:border-l"
           aria-label="Toggle theme"
         >
           <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
