@@ -1,5 +1,5 @@
 import { ChevronRight, Text } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -7,8 +7,10 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { useClickOutside } from '@/hooks/use-click-outside';
 import { cn } from '@/lib/utils';
 
+import { useActiveHeading } from '../../hooks/toc';
 import type { TocItem as TTocItem } from '../../types/toc';
 
 import { TocContent } from './toc-content';
@@ -20,23 +22,12 @@ type TocMobileProps = {
 export function TocMobile({ items }: TocMobileProps) {
   const [isOpen, setIsOpen] = useState(false);
   const collapsibleRef = useRef<HTMLDivElement>(null);
+  const { activeId } = useActiveHeading(items);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        isOpen &&
-        collapsibleRef.current &&
-        !collapsibleRef.current.contains(event.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
+  useClickOutside(collapsibleRef, () => setIsOpen(false), isOpen);
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
+  const activeItem = items.find((item) => item.id === activeId);
+  const activeText = activeItem?.text || '';
 
   return (
     <Collapsible
@@ -61,6 +52,14 @@ export function TocMobile({ items }: TocMobileProps) {
               isOpen ? 'rotate-90' : '-ms-1.5',
             )}
           />
+          <span
+            className={cn(
+              'text-muted-foreground -ms-1.5 truncate transition-opacity',
+              isOpen && 'opacity-0',
+            )}
+          >
+            {activeText}
+          </span>
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent className="flex max-h-[50vh] flex-col">

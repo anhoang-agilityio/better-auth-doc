@@ -54,7 +54,6 @@ export function extractTocFromPortableText(
           id,
           text,
           level,
-          children: [],
         });
       }
     } else if (portableBlock._type === 'steps') {
@@ -67,35 +66,10 @@ export function extractTocFromPortableText(
           id: stepId,
           text: item.title,
           level: stepsBlock.headingLevel,
-          children: [],
         });
       }
     }
   }
 
-  return buildHierarchicalToc(headings);
-}
-
-function buildHierarchicalToc(flatHeadings: TocItem[]): TocItem[] {
-  const result: TocItem[] = [];
-  const stack: TocItem[] = [];
-
-  for (const heading of flatHeadings) {
-    // Remove items from stack that are at the same level or deeper
-    while (stack.length > 0 && stack[stack.length - 1].level >= heading.level) {
-      stack.pop();
-    }
-
-    if (stack.length === 0) {
-      // This is a top-level heading
-      result.push(heading);
-    } else {
-      // This is a child of the last item in the stack
-      stack[stack.length - 1].children.push(heading);
-    }
-
-    stack.push(heading);
-  }
-
-  return result;
+  return headings;
 }

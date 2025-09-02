@@ -12,7 +12,6 @@ type TocItemProps = {
 
 export function TocItem({ item, activeId, level }: TocItemProps) {
   const isActive = activeId === item.id;
-  const hasChildren = item.children.length > 0;
 
   const handleClick = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
@@ -26,7 +25,7 @@ export function TocItem({ item, activeId, level }: TocItemProps) {
   };
 
   return (
-    <li className="flex flex-col gap-3">
+    <li className="flex">
       <a
         href={`#${item.id}`}
         onClick={(e) => handleClick(e, item.id)}
@@ -43,18 +42,6 @@ export function TocItem({ item, activeId, level }: TocItemProps) {
       >
         {item.text}
       </a>
-      {hasChildren && (
-        <ul className="space-y-3">
-          {item.children.map((child) => (
-            <TocItem
-              key={child.id}
-              item={child}
-              activeId={activeId}
-              level={child.level}
-            />
-          ))}
-        </ul>
-      )}
     </li>
   );
 }

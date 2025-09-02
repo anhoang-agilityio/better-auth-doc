@@ -11,6 +11,7 @@ type TocContentProps = {
 
 export function TocContent({ items }: TocContentProps) {
   const { activeId, activeIndex } = useActiveHeading(items);
+
   return (
     <ScrollArea className="mx-4 mt-2 mb-4 ps-px md:mx-6 xl:m-0">
       {/* Progress line */}

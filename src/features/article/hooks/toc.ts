@@ -7,18 +7,7 @@ const useActiveHeading = (items: TocItem[]) => {
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   useEffect(() => {
-    // Helper function to flatten TOC items
-    const flattenItems = (tocItems: TocItem[]): TocItem[] => {
-      return tocItems.reduce((acc: TocItem[], item) => {
-        acc.push(item);
-        if (item.children.length > 0) {
-          acc.push(...flattenItems(item.children));
-        }
-        return acc;
-      }, []);
-    };
-
-    const flatItems = flattenItems(items);
+    const flatItems = items;
 
     // Track which headings are currently intersecting
     const intersectingHeadings = new Set<string>();
