@@ -1,0 +1,79 @@
+---
+import { PortableText } from 'astro-portabletext';
+
+import { tableCellPortableTextComponents } from './config';
+
+import {
+  Table as UITable,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+
+type PortableContent = {
+  _type: string;
+} & Record<string, unknown>[];
+
+export type Props = {
+  node: {
+    headers: string[];
+    rows: Array<{
+      cells: Array<{
+        content: PortableContent;
+      }>;
+    }>;
+    columnSizing?: 'auto' | 'custom';
+    customWidths?: string[];
+  };
+};
+
+const { node } = Astro.props;
+const { headers, rows, columnSizing = 'auto', customWidths = [] } = node;
+
+const getColumnStyle = (index: number) => {
+  if (columnSizing === 'custom' && customWidths[index]) {
+    return { width: customWidths[index] };
+  }
+  return {};
+};
+---
+
+<div class="my-6">
+  <UITable className="mt-2 mb-0">
+    <TableHeader>
+      <TableRow>
+        {
+          headers.map((header, index) => (
+            <TableHead key={index} style={getColumnStyle(index)}>
+              {header}
+            </TableHead>
+          ))
+        }
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      {
+        rows.map((row, rowIndex) => (
+          <TableRow key={rowIndex}>
+            {row.cells.map((cell, cellIndex) => (
+              <TableCell key={cellIndex}>
+                {cell?.content &&
+                Array.isArray(cell.content) &&
+                cell.content.length > 0 ? (
+                  <PortableText
+                    value={cell.content}
+                    components={tableCellPortableTextComponents}
+                  />
+                ) : (
+                  <span class="text-muted-foreground">—</span>
+                )}
+              </TableCell>
+            ))}
+          </TableRow>
+        ))
+      }
+    </TableBody>
+  </UITable>
+</div>

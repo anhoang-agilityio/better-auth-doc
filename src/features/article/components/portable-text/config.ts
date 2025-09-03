@@ -1,5 +1,3 @@
-import type { PortableTextSpan } from 'astro-portabletext/types';
-
 import Blockquote from './block/blockquote.astro';
 import H1 from './block/h1.astro';
 import H2 from './block/h2.astro';
@@ -22,8 +20,9 @@ import StrikeThrough from './mark/strike-through.astro';
 import Strong from './mark/strong.astro';
 import Underline from './mark/underline.astro';
 import Steps from './steps.astro';
+import Table from './table.astro';
 
-export const portableTextComponents: PortableTextSpan = {
+export const portableTextComponents = {
   block: {
     h1: H1,
     h2: H2,
@@ -46,7 +45,20 @@ export const portableTextComponents: PortableTextSpan = {
     infoBox: InfoBox,
     codeBlock: CodeBlock,
     steps: Steps,
+    table: Table,
   },
+  mark: {
+    strong: Strong,
+    em: Em,
+    underline: Underline,
+    'strike-through': StrikeThrough,
+    code: CodeMark,
+    internalLink: InternalLink,
+    externalLink: ExternalLink,
+  },
+};
+
+export const tableCellPortableTextComponents = {
   mark: {
     strong: Strong,
     em: Em,
