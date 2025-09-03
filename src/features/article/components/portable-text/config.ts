@@ -1,5 +1,4 @@
 import Blockquote from './block/blockquote.astro';
-import H1 from './block/h1.astro';
 import H2 from './block/h2.astro';
 import H3 from './block/h3.astro';
 import H4 from './block/h4.astro';
@@ -24,7 +23,6 @@ import Table from './table.astro';
 
 export const portableTextComponents = {
   block: {
-    h1: H1,
     h2: H2,
     h3: H3,
     h4: H4,

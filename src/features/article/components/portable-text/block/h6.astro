@@ -1,4 +1,7 @@
 ---
+import { Link } from 'lucide-react';
+
+import { ScrollLink } from '@/components/ui/scroll-link';
 import {
   extractTextFromChildren,
   generateId,
@@ -12,7 +15,10 @@ const id = generateId(text);
 
 <h6
   id={id}
-  class="text-foreground mt-[1.3em] mb-[0.3em] scroll-mt-16 leading-[1.5] font-normal"
+  class="group text-foreground mt-[1.3em] mb-[0.3em] flex scroll-m-28 scroll-mt-16 flex-row items-center gap-2 leading-[1.5] font-medium"
 >
-  <slot />
+  <ScrollLink targetId={id} client:visible><slot /></ScrollLink>
+  <Link
+    className="text-muted-foreground size-3.5 shrink-0 opacity-0 transition-opacity group-hover:opacity-100"
+  />
 </h6>
