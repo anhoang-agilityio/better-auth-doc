@@ -38,32 +38,32 @@ const metadata: Metadata = {
 
 <DocsLayout metadata={metadata}>
   <Fragment slot="article">
-    <div class="flex gap-8">
-      <div class="min-w-0 flex-1">
-        <Article article={article} />
-        {
-          (adjacentArticles.previous || adjacentArticles.next) && (
-            <div class="@container mt-16 grid grid-cols-2 gap-4">
-              <div>
-                {adjacentArticles.previous && (
-                  <NavigationCard
-                    article={adjacentArticles.previous}
-                    direction="previous"
-                  />
-                )}
-              </div>
-              <div>
-                {adjacentArticles.next && (
-                  <NavigationCard
-                    article={adjacentArticles.next}
-                    direction="next"
-                  />
-                )}
-              </div>
+    <div
+      class="flex w-full max-w-[860px] flex-col gap-6 px-4 pt-8 md:px-6 md:pt-12 xl:mx-auto xl:px-12"
+    >
+      <Article article={article} />
+      {
+        (adjacentArticles.previous || adjacentArticles.next) && (
+          <div class="mt-16 grid grid-cols-2 gap-4 pb-6">
+            <div>
+              {adjacentArticles.previous && (
+                <NavigationCard
+                  article={adjacentArticles.previous}
+                  direction="previous"
+                />
+              )}
             </div>
-          )
-        }
-      </div>
+            <div>
+              {adjacentArticles.next && (
+                <NavigationCard
+                  article={adjacentArticles.next}
+                  direction="next"
+                />
+              )}
+            </div>
+          </div>
+        )
+      }
     </div>
   </Fragment>
   <Fragment slot="toc-desktop">

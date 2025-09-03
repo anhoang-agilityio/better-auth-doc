@@ -43,7 +43,7 @@ export const DocsNavigation = ({
   }, [categories, currentPath]);
 
   return (
-    <nav aria-label="Docs navigation">
+    <nav aria-label="Docs navigation" className="size-full overflow-y-auto">
       <Accordion
         type="single"
         defaultValue={defaultValue}
