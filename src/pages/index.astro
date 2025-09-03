@@ -1,29 +1,56 @@
 ---
+import { CircleFadingPlus } from 'lucide-react';
+
+import { Button } from '@/components/ui/button';
 import type { MetadataType as Metadata } from '@/components/utils/metadata';
-import Welcome from '@/components/welcome.astro';
-import Base from '@/layouts/base/base.astro';
+import { paths } from '@/config/paths';
+import BaseLayout from '@/layouts/base/base.astro';
 
 const metadata: Metadata = {
   title: 'Better Auth Doc',
   description: 'A documentation for a better auth flow',
-  openGraph: {
-    title: 'Better Auth Doc',
-    description: 'A documentation for a better auth flow',
-    url: 'https://better-auth.dev',
-    siteName: 'Better Auth Doc',
-    images: [
-      {
-        url: 'https://better-auth.dev/og.png',
-        width: 1200,
-        height: 630,
-      },
-    ],
-    type: 'website',
-    locale: 'en_US',
-  },
 };
 ---
 
-<Base metadata={metadata}>
-  <Welcome />
-</Base>
+<BaseLayout metadata={metadata}>
+  <div class="bg-background text-foreground min-h-screen">
+    <main class="flex min-h-screen items-center justify-center px-6 py-12">
+      <div class="w-full max-w-4xl space-y-12 text-center">
+        <div class="space-y-6">
+          <div
+            class="text-muted-foreground mb-4 inline-flex items-center gap-2 text-sm"
+          >
+            <CircleFadingPlus className="size-5" />
+            <span class="font-medium">Own Your Auth</span>
+          </div>
+
+          <h1
+            class="text-foreground text-4xl font-bold tracking-tight md:text-6xl"
+          >
+            The most comprehensive<br />
+            authentication framework<br />
+            for TypeScript
+          </h1>
+        </div>
+
+        <div class="flex flex-col items-center space-y-8">
+          <div class="w-full max-w-md">
+            <div
+              class="bg-secondary border-border hover:bg-secondary/80 relative rounded-lg border p-2.5 transition-colors"
+            >
+              <code class="font-geist-mono text-sm">
+                <span class="text-foreground">npm add better-auth</span>
+              </code>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-4 sm:flex-row">
+            <Button size="lg" className="px-8 py-3 text-base font-medium">
+              <a href={paths.docs.getHref('introduction')}>GET STARTED</a>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
