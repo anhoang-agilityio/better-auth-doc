@@ -16,6 +16,10 @@ export default defineConfig({
       useCdn: false, // for static builds
     }),
   ],
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
+  },
 
   vite: {
     plugins: [tailwindcss()],

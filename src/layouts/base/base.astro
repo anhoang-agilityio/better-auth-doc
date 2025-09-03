@@ -10,6 +10,8 @@ import '@fontsource/geist-sans/800.css';
 import '@fontsource/geist-sans/900.css';
 import '@fontsource-variable/geist-mono';
 import '@/styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+
 import Header from './header/index.astro';
 
 import InitTheme from '@/components/themes/init-theme.astro';
@@ -26,6 +28,7 @@ const { metadata } = Astro.props;
 <html lang="en">
   <head>
     <Metadata metadata={metadata} />
+    <ClientRouter />
     <InitTheme />
   </head>
   <body class="bg-background text-foreground font-geist-sans antialiased">

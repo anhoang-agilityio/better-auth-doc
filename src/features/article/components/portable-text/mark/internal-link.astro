@@ -3,6 +3,7 @@ import type { MarkProps } from 'astro-portabletext/types';
 import { sanityClient } from 'sanity:client';
 
 import Link from '@/components/ui/link.astro';
+import { paths } from '@/config/paths';
 
 type Props = MarkProps<{ article: { _ref: string } }>;
 
@@ -18,7 +19,7 @@ const article = await sanityClient.fetch(articleQuery, {
   id: node.markDef.article._ref,
 });
 
-const href = `/articles/${article.slug.current}`;
+const href = paths.docs.getHref(article.slug.current);
 ---
 
 <Link href={href} title={`Link to: ${article.title}`}><slot /></Link>
