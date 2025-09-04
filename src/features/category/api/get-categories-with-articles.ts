@@ -1,5 +1,6 @@
 import groq from 'groq';
-import { sanityClient } from 'sanity:client';
+
+import { loadQuery } from '@/lib/sanity';
 
 type ArticleItem = {
   title: string;
@@ -30,5 +31,9 @@ const query = groq`
 export async function getCategoriesWithArticles(): Promise<
   CategoryWithArticles[]
 > {
-  return sanityClient.fetch<CategoryWithArticles[]>(query);
+  const { data: categoriesWithArticles } = await loadQuery<
+    CategoryWithArticles[]
+  >({ query });
+
+  return categoriesWithArticles;
 }

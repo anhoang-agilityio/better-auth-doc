@@ -1,7 +1,6 @@
 ---
 import type { MetadataType as Metadata } from '@/components/utils/metadata';
 import { getAdjacentArticles } from '@/features/article/api/get-adjacent-articles';
-import { getAllArticleSlugs } from '@/features/article/api/get-all-article-slugs';
 import { getArticleBySlug } from '@/features/article/api/get-article-by-slug';
 import Article from '@/features/article/components/article.astro';
 import NavigationCard from '@/features/article/components/navigation-card.astro';
@@ -9,11 +8,6 @@ import { TocDesktop } from '@/features/article/components/toc/toc-desktop';
 import { TocMobile } from '@/features/article/components/toc/toc-mobile';
 import { extractTocFromPortableText } from '@/features/article/utils/toc';
 import DocsLayout from '@/layouts/docs/index.astro';
-
-export async function getStaticPaths() {
-  const slugs = await getAllArticleSlugs();
-  return slugs.map((item) => ({ params: { slug: item.slug } }));
-}
 
 const { slug } = Astro.params;
 

@@ -1,6 +1,7 @@
 import type { PortableTextProps } from 'astro-portabletext/types';
 import groq from 'groq';
-import { sanityClient } from 'sanity:client';
+
+import { loadQuery } from '@/lib/sanity';
 
 export type Article = {
   id: string;
@@ -29,5 +30,10 @@ const query = groq`
 `;
 
 export async function getArticleBySlug(slug: string): Promise<Article | null> {
-  return sanityClient.fetch<Article | null>(query, { slug });
+  const { data: article } = await loadQuery<Article | null>({
+    query,
+    params: { slug },
+  });
+
+  return article;
 }
