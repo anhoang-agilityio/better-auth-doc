@@ -1,6 +1,5 @@
 import groq from 'groq';
-
-import { loadQuery } from '@/lib/sanity';
+import { sanityClient } from 'sanity:client';
 
 type AdjacentArticle = {
   id: string;
@@ -26,9 +25,10 @@ const query = groq`
 export async function getAdjacentArticles(
   currentSlug: string,
 ): Promise<AdjacentArticles> {
-  const { data: articles } = await loadQuery<
-    Array<AdjacentArticle & { categoryOrder: number; order: number }>
-  >({ query });
+  const articles =
+    await sanityClient.fetch<
+      Array<AdjacentArticle & { categoryOrder: number; order: number }>
+    >(query);
 
   const currentIndex = articles.findIndex(
     (article) => article.id === currentSlug,

@@ -1,27 +1,25 @@
 ---
 import type { MarkProps } from 'astro-portabletext/types';
+import { sanityClient } from 'sanity:client';
 
 import Link from '@/components/ui/link.astro';
 import { paths } from '@/config/paths';
-import { loadQuery } from '@/lib/sanity';
 
 type Props = MarkProps<{ article: { _ref: string } }>;
-type ArticleLink = { title: string; slug: string };
 
 const { node } = Astro.props;
 
 // Fetch article data from Sanity
 const articleQuery = `*[_type == "article" && _id == $id][0]{
   title,
-  "slug": slug.current
+  slug
 }`;
 
-const { data: article } = await loadQuery<ArticleLink>({
-  query: articleQuery,
-  params: { id: node.markDef.article._ref },
+const article = await sanityClient.fetch(articleQuery, {
+  id: node.markDef.article._ref,
 });
 
-const href = paths.docs.getHref(article.slug);
+const href = paths.docs.getHref(article.slug.current);
 ---
 
 <Link href={href} title={`Link to: ${article.title}`}><slot /></Link>

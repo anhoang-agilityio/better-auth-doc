@@ -10,16 +10,12 @@ import '@fontsource/geist-sans/800.css';
 import '@fontsource/geist-sans/900.css';
 import '@fontsource-variable/geist-mono';
 import '@/styles/global.css';
-import { VisualEditing } from '@sanity/astro/visual-editing';
 import { ClientRouter } from 'astro:transitions';
 
 import Header from './header/index.astro';
 
 import InitTheme from '@/components/themes/init-theme.astro';
 import { Metadata, type MetadataType } from '@/components/utils/metadata';
-
-const visualEditingEnabled =
-  import.meta.env.PUBLIC_SANITY_VISUAL_EDITING_ENABLED == 'true';
 
 type Props = {
   metadata: MetadataType;
@@ -40,6 +36,5 @@ const { metadata } = Astro.props;
       <slot name="mobile-nav" slot="mobile-nav" />
     </Header>
     <slot />
-    <VisualEditing enabled={visualEditingEnabled} />
   </body>
 </html>
