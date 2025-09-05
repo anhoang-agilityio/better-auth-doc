@@ -7,11 +7,18 @@ type ArticleItem = {
   icon: string | null;
 };
 
-export type CategoryWithArticles = {
+type SubgroupItem = {
+  id: string;
+  title: string;
+  articles: ArticleItem[];
+};
+
+type CategoryWithArticles = {
   id: string;
   title: string;
   icon: string;
-  items: ArticleItem[];
+  subgroups: SubgroupItem[];
+  articles: ArticleItem[]; // Articles without subgroup
 };
 
 const query = groq`
@@ -19,7 +26,16 @@ const query = groq`
     "id": slug.current,
     "title": name,
     "icon": icon.asset->url,
-    "items": *[_type == "article" && references(^._id)] | order(order asc) {
+    "subgroups": *[_type == "subgroup" && references(^._id)] | order(order asc) {
+      "id": slug.current,
+      "title": name,
+      "articles": *[_type == "article" && references(^._id)] | order(order asc) {
+        "title": title,
+        "slug": slug.current,
+        "icon": icon.asset->url
+      }
+    },
+    "articles": *[_type == "article" && references(^._id) && !defined(subgroup)] | order(order asc) {
       "title": title,
       "slug": slug.current,
       "icon": icon.asset->url

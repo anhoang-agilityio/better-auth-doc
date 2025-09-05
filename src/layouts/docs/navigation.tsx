@@ -11,22 +11,59 @@ import {
 import { cn } from '@/lib/utils';
 import { isPathActive } from '@/utils/paths';
 
-export type DocsNavigationCategoryItem = {
+type DocsNavigationCategoryItem = {
   title: string;
   href: string;
   iconSvg?: string | null;
+};
+
+type DocsNavigationSubgroup = {
+  id: string;
+  title: string;
+  articles: DocsNavigationCategoryItem[];
 };
 
 export type DocsNavigationCategory = {
   id: string;
   title: string;
   iconSvg?: string | null;
-  items: DocsNavigationCategoryItem[];
+  subgroups: DocsNavigationSubgroup[];
+  articles: DocsNavigationCategoryItem[]; // Articles without subgroup
 };
 
-export type DocsNavigationProps = {
+type DocsNavigationProps = {
   categories: DocsNavigationCategory[];
   currentPath?: string;
+};
+
+type ArticleListItemProps = {
+  article: DocsNavigationCategoryItem;
+  isActive: boolean;
+};
+
+const ArticleListItem = ({ article, isActive }: ArticleListItemProps) => {
+  return (
+    <li>
+      <a
+        href={article.href}
+        className={cn(
+          'text-muted-foreground hover:text-foreground hover:bg-primary/10 flex items-center gap-x-2.5 py-1 pl-1 text-nowrap break-words transition-colors',
+          isActive && 'text-foreground bg-primary/10',
+        )}
+      >
+        {article.iconSvg ? (
+          <div
+            className="min-w-4"
+            aria-hidden
+            dangerouslySetInnerHTML={{
+              __html: article.iconSvg,
+            }}
+          />
+        ) : null}
+        {article.title}
+      </a>
+    </li>
+  );
 };
 
 export const DocsNavigation = ({
@@ -34,11 +71,21 @@ export const DocsNavigation = ({
   currentPath,
 }: DocsNavigationProps) => {
   const defaultValue = React.useMemo(() => {
-    const activeCategory = categories.find((category) =>
-      category.items.some((item) =>
+    const activeCategory = categories.find((category) => {
+      // Check direct articles
+      const hasActiveDirectArticle = category.articles.some((item) =>
         currentPath ? isPathActive(currentPath, item.href) : false,
-      ),
-    );
+      );
+
+      // Check articles within subgroups
+      const hasActiveSubgroupArticle = category.subgroups.some((subgroup) =>
+        subgroup.articles.some((item) =>
+          currentPath ? isPathActive(currentPath, item.href) : false,
+        ),
+      );
+
+      return hasActiveDirectArticle || hasActiveSubgroupArticle;
+    });
     return activeCategory?.id;
   }, [categories, currentPath]);
 
@@ -69,33 +116,49 @@ export const DocsNavigation = ({
               </span>
             </AccordionTrigger>
             <AccordionContent>
-              <ul className="flex flex-col gap-y-1 divide-y pt-0 pb-4 pl-4">
-                {category.items.map((item) => {
-                  const isActive = currentPath
-                    ? isPathActive(currentPath, item.href)
-                    : false;
-                  return (
-                    <li key={item.href}>
-                      <a
-                        href={item.href}
-                        className={cn(
-                          'text-muted-foreground hover:text-foreground hover:bg-primary/10 flex items-center gap-x-2.5 py-1 pl-1 text-nowrap break-words transition-colors',
-                          isActive && 'text-foreground bg-primary/10',
-                        )}
-                      >
-                        {item.iconSvg ? (
-                          <div
-                            className="min-w-4"
-                            aria-hidden
-                            dangerouslySetInnerHTML={{ __html: item.iconSvg }}
-                          />
-                        ) : null}
-                        {item.title}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
+              <div className="flex flex-col gap-y-1 pt-0 pb-4 pl-2">
+                {/* Direct articles (without subgroup) */}
+                {category.articles.length > 0 && (
+                  <ul className="flex flex-col gap-y-1">
+                    {category.articles.map((article) => (
+                      <ArticleListItem
+                        key={article.href}
+                        article={article}
+                        isActive={
+                          currentPath
+                            ? isPathActive(currentPath, article.href)
+                            : false
+                        }
+                      />
+                    ))}
+                  </ul>
+                )}
+
+                {/* Subgroups with their articles */}
+                {category.subgroups.map((subgroup) => (
+                  <div key={subgroup.id} className="flex flex-col gap-y-1">
+                    <div className="flex flex-row items-center gap-2 py-1 pl-1">
+                      <p className="text-foreground text-nowrap break-words">
+                        {subgroup.title}
+                      </p>
+                      <div className="bg-foreground h-px flex-1"></div>
+                    </div>
+                    <ul className="flex flex-col gap-y-1 pl-2">
+                      {subgroup.articles.map((article) => (
+                        <ArticleListItem
+                          key={article.href}
+                          article={article}
+                          isActive={
+                            currentPath
+                              ? isPathActive(currentPath, article.href)
+                              : false
+                          }
+                        />
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
             </AccordionContent>
           </AccordionItem>
         ))}
