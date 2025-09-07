@@ -27,6 +27,10 @@ const ToggleTheme = () => {
       (theme === 'system' &&
         window.matchMedia('(prefers-color-scheme: dark)').matches);
     document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    }
   }, [theme]);
 
   return (
