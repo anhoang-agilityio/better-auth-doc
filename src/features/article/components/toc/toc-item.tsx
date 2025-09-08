@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { ScrollLink } from '@/components/ui/scroll-link';
 import { cn } from '@/lib/utils';
 
@@ -7,13 +9,17 @@ type TocItemProps = {
   item: TTocItem;
   activeId: string | null;
   level: number;
+  ref?:
+    | React.RefCallback<HTMLLIElement>
+    | React.RefObject<HTMLLIElement>
+    | null;
 };
 
-export function TocItem({ item, activeId, level }: TocItemProps) {
+export const TocItem = ({ item, activeId, level, ref }: TocItemProps) => {
   const isActive = activeId === item.id;
 
   return (
-    <li className="flex">
+    <li ref={ref} className="flex">
       <ScrollLink
         targetId={item.id}
         className={cn(
@@ -31,4 +37,6 @@ export function TocItem({ item, activeId, level }: TocItemProps) {
       </ScrollLink>
     </li>
   );
-}
+};
+
+TocItem.displayName = 'TocItem';
