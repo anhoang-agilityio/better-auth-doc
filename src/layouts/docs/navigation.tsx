@@ -53,7 +53,7 @@ const ArticleListItem = ({ article, isActive }: ArticleListItemProps) => {
       >
         {article.iconSvg ? (
           <div
-            className="min-w-4"
+            className="w-4"
             aria-hidden
             dangerouslySetInnerHTML={{
               __html: article.iconSvg,
