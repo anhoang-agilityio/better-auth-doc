@@ -3,23 +3,61 @@ import type { MarkProps } from 'astro-portabletext/types';
 import { sanityClient } from 'sanity:client';
 
 import Link from '@/components/ui/link.astro';
+import { ScrollLink } from '@/components/ui/scroll-link';
 import { paths } from '@/config/paths';
+import { generateId } from '@/features/article/utils/toc';
 
-type Props = MarkProps<{ article: { _ref: string } }>;
+type Props = MarkProps<{
+  article?: { _ref: string };
+  sameArticle?: boolean;
+  fragment?: string;
+}>;
 
 const { node } = Astro.props;
 
-// Fetch article data from Sanity
-const articleQuery = `*[_type == "article" && _id == $id][0]{
-  title,
-  slug
-}`;
+const fragmentId = node.markDef.fragment
+  ? generateId(node.markDef.fragment)
+  : '';
 
-const article = await sanityClient.fetch(articleQuery, {
-  id: node.markDef.article._ref,
-});
+let href: string;
+let title: string;
 
-const href = paths.docs.getHref(article.slug.current);
+if (node.markDef.sameArticle) {
+  // Same article link - create fragment-only href
+  href = fragmentId ? `#${fragmentId}` : '#';
+  title = fragmentId
+    ? `Link to section: ${node.markDef.fragment}`
+    : 'Link to top of page';
+} else {
+  // Different article link - fetch article data and create full href
+  const articleQuery = `*[_type == "article" && _id == $id][0]{
+    title,
+    slug
+  }`;
+
+  const article = await sanityClient.fetch(articleQuery, {
+    id: node.markDef.article!._ref,
+  });
+
+  const basePath = paths.docs.getHref(article.slug.current);
+
+  href = fragmentId ? `${basePath}#${fragmentId}` : basePath;
+  title = fragmentId
+    ? `Link to: ${article.title} - ${node.markDef.fragment}`
+    : `Link to: ${article.title}`;
+}
 ---
 
-<Link href={href} title={`Link to: ${article.title}`}><slot /></Link>
+{
+  /* eslint-disable */
+  node.markDef.sameArticle && node.markDef.fragment ? (
+    <ScrollLink
+      targetId={href.slice(1)}
+      title={title}
+      client:visible
+    ><slot /></ScrollLink
+    >
+  ) : (
+    <Link href={href} title={title}><slot /></Link>
+  )
+}
