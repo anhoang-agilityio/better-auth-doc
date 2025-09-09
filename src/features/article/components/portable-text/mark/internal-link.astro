@@ -55,8 +55,7 @@ if (node.markDef.sameArticle) {
       targetId={href.slice(1)}
       title={title}
       client:visible
-    ><slot /></ScrollLink
-    >
+    ><slot /></ScrollLink>
   ) : (
     <Link href={href} title={title}><slot /></Link>
   )

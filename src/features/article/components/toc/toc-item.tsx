@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ScrollLink } from '@/components/ui/scroll-link';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 
 import type { TocItem as TTocItem } from '../../types/toc';
 

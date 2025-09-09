@@ -8,7 +8,7 @@ import {
   CollapsibleTrigger,
 } from '@/components/ui/collapsible';
 import { useClickOutside } from '@/hooks/use-click-outside';
-import { cn } from '@/lib/utils';
+import { cn } from '@/lib/shadcn';
 
 import { useActiveHeading } from '../../hooks/toc';
 import type { TocItem as TTocItem } from '../../types/toc';

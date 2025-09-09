@@ -4,7 +4,7 @@ import { DocsNavigation, type DocsNavigationCategory } from './navigation';
 import type { MetadataType } from '@/components/utils/metadata';
 import { paths } from '@/config/paths';
 import { getCategoriesWithArticles } from '@/features/category/api/get-categories-with-articles';
-import Base from '@/layouts/base/base.astro';
+import Base from '@/layouts/base/index.astro';
 
 type Props = {
   metadata: MetadataType;
