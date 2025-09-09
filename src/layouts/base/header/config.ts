@@ -1,11 +1,13 @@
+import { paths } from '@/config/paths';
+
 const pages = [
   {
     title: 'home',
-    path: '/',
+    path: paths.home.getHref(),
   },
   {
     title: 'docs',
-    path: '/docs',
+    path: paths.docs.getHref('introduction'),
   },
   {
     title: 'github',
