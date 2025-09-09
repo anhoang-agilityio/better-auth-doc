@@ -19,10 +19,11 @@ type HighlightPosition = {
 export function TocContent({ items }: TocContentProps) {
   const { activeId, activeIndex } = useActiveHeading(items);
   const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
   const [highlightPosition, setHighlightPosition] =
     useState<HighlightPosition | null>(null);
 
-  // Fallback measurement when activeIndex changes
+  // Set highlight position based on active index
   useEffect(() => {
     if (activeIndex >= 0 && itemRefs.current[activeIndex]) {
       const element = itemRefs.current[activeIndex];
@@ -39,8 +40,41 @@ export function TocContent({ items }: TocContentProps) {
     }
   }, [activeIndex]);
 
+  // Scroll active item into view
+  useEffect(() => {
+    if (
+      activeIndex >= 0 &&
+      itemRefs.current[activeIndex] &&
+      scrollAreaRef.current
+    ) {
+      const activeElement = itemRefs.current[activeIndex];
+      const scrollContainer = scrollAreaRef.current.querySelector(
+        '[data-slot="scroll-area-viewport"]',
+      );
+
+      if (activeElement && scrollContainer) {
+        const containerRect = scrollContainer.getBoundingClientRect();
+        const elementRect = activeElement.getBoundingClientRect();
+
+        // Check if element is outside the visible area
+        const isAboveView = elementRect.top < containerRect.top;
+        const isBelowView = elementRect.bottom > containerRect.bottom;
+
+        if (isAboveView || isBelowView) {
+          activeElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+          });
+        }
+      }
+    }
+  }, [activeIndex]);
+
   return (
-    <ScrollArea className="mx-4 mt-2 mb-4 ps-px md:mx-6 xl:m-0">
+    <ScrollArea
+      ref={scrollAreaRef}
+      className="mx-4 mt-2 mb-4 w-full ps-px md:mx-6 xl:m-0"
+    >
       {items.length > 0 ? (
         <div className="relative">
           {/* Progress line */}

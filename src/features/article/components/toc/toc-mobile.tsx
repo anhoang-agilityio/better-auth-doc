@@ -62,7 +62,7 @@ export function TocMobile({ items }: TocMobileProps) {
           </span>
         </Button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="flex max-h-[50vh] flex-col">
+      <CollapsibleContent className="flex max-h-[50vh]">
         <TocContent items={items} />
       </CollapsibleContent>
     </Collapsible>
