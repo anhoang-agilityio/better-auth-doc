@@ -5,6 +5,7 @@ import type { MetadataType } from '@/components/utils/metadata';
 import { paths } from '@/config/paths';
 import { getCategoriesWithArticles } from '@/features/category/api/get-categories-with-articles';
 import Base from '@/layouts/base/index.astro';
+import { fetchSvg } from '@/utils/data';
 
 type Props = {
   metadata: MetadataType;
@@ -13,18 +14,6 @@ type Props = {
 const { metadata } = Astro.props;
 
 const categoriesFromCms = await getCategoriesWithArticles();
-
-async function fetchSvg(url?: string | null): Promise<string | null> {
-  try {
-    if (!url) return null;
-    const res = await fetch(url);
-    if (!res.ok) return null;
-    const text = await res.text();
-    return text || null;
-  } catch {
-    return null;
-  }
-}
 
 const categories: DocsNavigationCategory[] = await Promise.all(
   categoriesFromCms.map(async (category) => {

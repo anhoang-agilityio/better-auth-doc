@@ -10,6 +10,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.4",
     "@astrojs/react": "^4.3.0",
     "@astrojs/vercel": "^8.2.7",
     "@fontsource-variable/geist-mono": "^5.2.6",
@@ -34,7 +35,9 @@
     "astro-portabletext": "^0.11.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "dompurify": "^3.2.6",
     "groq": "^4.5.0",
+    "jsdom": "^26.1.0",
     "lodash": "^4.17.21",
     "lucide-react": "^0.539.0",
     "prismjs": "^1.30.0",
@@ -45,12 +48,14 @@
     "shiki": "^3.11.0",
     "styled-components": "^6.1.19",
     "tailwind-merge": "^3.3.1",
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "typescript": "^5.9.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.33.0",
+    "@types/jsdom": "^21.1.7",
     "@typescript-eslint/eslint-plugin": "^8.39.1",
     "@typescript-eslint/parser": "^8.39.1",
     "eslint": "^9.33.0",
