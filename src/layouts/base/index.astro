@@ -22,12 +22,30 @@ type Props = {
 };
 
 const { metadata } = Astro.props;
+
+// Default favicon metadata that can be overridden
+const defaultMetadata: MetadataType = {
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+  },
+};
+
+// Merge default metadata with provided metadata, with provided metadata taking precedence
+const mergedMetadata: MetadataType = {
+  ...defaultMetadata,
+  ...metadata,
+  icons: {
+    ...defaultMetadata.icons,
+    ...metadata.icons,
+  },
+};
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <Metadata metadata={metadata} />
+    <Metadata metadata={mergedMetadata} />
     <ClientRouter />
     <InitTheme />
   </head>
