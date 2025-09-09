@@ -27,7 +27,7 @@ const adjacentArticles = await getAdjacentArticles(slug);
 const tocItems = extractTocFromPortableText(article.content);
 
 const metadata: Metadata = {
-  title: article.title,
+  title: `${article.title} | Better Auth`,
   description: article.description,
 };
 ---
