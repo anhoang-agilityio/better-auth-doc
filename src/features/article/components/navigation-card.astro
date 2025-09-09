@@ -27,15 +27,15 @@ const isNext = direction === 'next';
 >
   <div
     class={cn(
-      'text-muted-foreground inline-flex items-center gap-2',
+      'text-muted-foreground inline-flex items-center gap-0.5',
       isNext && 'flex-row-reverse',
     )}
   >
     {
       isNext ? (
-        <ChevronRight className="-ms-1 size-4 shrink-0" />
+        <ChevronRight className="-me-1 size-4 shrink-0" />
       ) : (
-        <ChevronLeft className="-me-1 size-4 shrink-0" />
+        <ChevronLeft className="-ms-1 size-4 shrink-0" />
       )
     }
     <span>{isNext ? 'Next Page' : 'Previous Page'}</span>
