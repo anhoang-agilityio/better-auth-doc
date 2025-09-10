@@ -1,46 +1,120 @@
-# Astro Starter Kit: Basics
+# Better Auth Documentation
 
-```sh
-pnpm create astro@latest -- --template basics
+A comprehensive documentation website for Better Auth - the most comprehensive authentication framework for TypeScript.
+
+🌐 **Live Demo:** [https://better-auth-doc.vercel.app/](https://better-auth-doc.vercel.app/)
+
+## 🚀 Tech Stack
+
+- **[Astro](https://astro.build)**
+- **[React](https://react.dev)**
+- **[Sanity CMS](https://sanity.io)**
+- **[TypeScript](https://typescriptlang.org)**
+- **[Tailwind CSS](https://tailwindcss.com)**
+- **[Shiki](https://shiki.style)**
+- **[Shadcn UI](https://ui.shadcn.com/)**
+
+## 📋 Prerequisites
+
+- **Node.js** >= 22.0.0
+- **pnpm** (recommended package manager)
+
+## 🛠️ Installation
+
+### 1. Clone the repository
+
+### 2. Set up environment variables:
+
+Create a `.env` file in the studio directory with the following variables:
+
+```env
+SANITY_STUDIO_PROJECT_ID=
+SANITY_STUDIO_DATASET=
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+### 3. Install dependencies:
+```bash
+pnpm install
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+### 4. Development
+
+Start the development server:
+
+```bash
+pnpm dev
+```
 
 ## 🧞 Commands
 
-All commands are run from the root of the project, from a terminal:
+All commands should be run from the `/web` directory:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+| Command | Action |
+|:--------|:-------|
+| `pnpm install` | Install dependencies |
+| `pnpm dev` | Start development server at `localhost:4321` |
+| `pnpm build` | Build production site to `./dist/` |
+| `pnpm preview` | Preview production build locally |
 
-## 👀 Want to learn more?
+## 📁 Project Structure
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```
+web/
+├── public/                  # Static assets
+├── src/
+│   ├── components/
+│   │   ├── themes/          # Dark/light theme components
+│   │   ├── ui/              # Reusable UI components (Radix-based)
+│   │   └── utils/           # Utility components
+│   ├── features/
+│   │   ├── article/         # Article rendering and TOC
+│   │   │   ├── api/         # Article data fetching
+│   │   │   ├── components/  # Article-specific components
+│   │   │   └── utils/       # Article utilities
+│   │   └── category/        # Category management
+│   ├── layouts/
+│   │   ├── base/            # Base layout with header/navigation
+│   │   └── docs/            # Documentation layout with sidebar
+│   ├── lib/                 # Third-party library configurations
+│   ├── pages/               # Astro pages and routes
+│   ├── styles/              # Global CSS styles
+│   └── utils/               # Shared utilities
+├── astro.config.mjs         # Astro configuration
+└── package.json
+```
+
+## 🎨 Key Features
+
+### Content Management
+- **Sanity CMS Integration**: Headless CMS for managing documentation content
+- **Portable Text Rendering**: Rich text content with custom blocks and components
+- **Dynamic Content**: Articles, categories, and navigation fetched from Sanity
+
+### User Experience  
+- **Dark/Light Mode**: System preference detection with manual toggle
+- **Responsive Design**: Mobile-first approach with adaptive layouts
+- **Table of Contents**: Auto-generated navigation for articles
+- **Syntax Highlighting**: Shiki-powered code blocks with GitHub themes
+- **Copy to Clipboard**: One-click code copying functionality
+
+### Performance
+- **Static Site Generation**: Pre-built pages for optimal performance
+- **Incremental Static Regeneration**: 10-minute cache with Vercel ISR
+- **Prefetching**: Viewport-based prefetching for smooth navigation
+
+## 🔧 Sanity Integration
+
+### Configuration:
+- Project ID: Configured via environment variables
+- Dataset: Configured via environment variables
+- API Version: `2025-08-18`
+
+### Content Types:
+- Articles with portable text content
+- Categories for organization
+
+## 📚 Learn More
+
+- [Astro Documentation](https://docs.astro.build)
+- [Sanity Documentation](https://sanity.io/docs)
+- [Better Auth Documentation](https://better-auth.com)
