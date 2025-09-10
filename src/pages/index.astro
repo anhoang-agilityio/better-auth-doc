@@ -2,6 +2,7 @@
 import { CircleFadingPlus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
+import { CopyButton } from '@/components/ui/copy-button';
 import type { MetadataType as Metadata } from '@/components/utils/metadata';
 import { paths } from '@/config/paths';
 import BaseLayout from '@/layouts/base/index.astro';
@@ -40,6 +41,11 @@ const metadata: Metadata = {
             <div
               class="bg-secondary border-border hover:bg-secondary/80 relative rounded-lg border p-2.5 transition-colors"
             >
+              <CopyButton
+                text="npm add better-auth"
+                className="absolute top-2 right-2 z-10"
+                client:load
+              />
               <code class="font-geist-mono text-sm">
                 <span class="text-foreground">npm add better-auth</span>
               </code>

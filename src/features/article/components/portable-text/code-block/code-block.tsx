@@ -1,7 +1,9 @@
 'use client';
 
 import { Card } from '@/components/ui/card';
+import { CopyButton } from '@/components/ui/copy-button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { extractTextFromHtml } from '@/utils/data';
 
 type Tab = {
   value: string;
@@ -28,7 +30,11 @@ export default function CodeBlock({
     const only = tabs[0];
     if (!only) return null;
     return (
-      <Card className="bg-secondary/50 my-6 text-sm">
+      <Card className="bg-secondary/50 group relative my-6 text-sm">
+        <CopyButton
+          text={extractTextFromHtml(only.content)}
+          className="absolute top-1 right-1 z-2 opacity-0 group-hover:opacity-100"
+        />
         {only.filename && (
           <div className="bg-muted border-b px-4 py-1.5">
             <span className="text-muted-foreground truncate">
@@ -55,7 +61,15 @@ export default function CodeBlock({
           ))}
         </TabsList>
         {tabs.map((tab) => (
-          <TabsContent key={tab.value} value={tab.value}>
+          <TabsContent
+            key={tab.value}
+            value={tab.value}
+            className="group relative"
+          >
+            <CopyButton
+              text={extractTextFromHtml(tab.content)}
+              className="absolute top-1 right-1 z-2 opacity-0 group-hover:opacity-100"
+            />
             {tab.filename && (
               <div className="bg-muted border-y px-4 py-1.5">
                 <span className="text-muted-foreground truncate">

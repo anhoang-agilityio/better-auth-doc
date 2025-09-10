@@ -6,6 +6,7 @@ import { paths } from '@/config/paths';
 import { getCategoriesWithArticles } from '@/features/category/api/get-categories-with-articles';
 import Base from '@/layouts/base/index.astro';
 import { fetchSvg } from '@/utils/data';
+import { sanitizeContent } from '@/utils/server';
 
 type Props = {
   metadata: MetadataType;
@@ -17,26 +18,35 @@ const categoriesFromCms = await getCategoriesWithArticles();
 
 const categories: DocsNavigationCategory[] = await Promise.all(
   categoriesFromCms.map(async (category) => {
-    const categoryIconSvg = await fetchSvg(category.icon);
+    const rawCategoryIcon = await fetchSvg(category.icon);
+    const categoryIconSvg = rawCategoryIcon
+      ? sanitizeContent(rawCategoryIcon)
+      : null;
 
     // Process direct articles (without subgroup)
     const articles = await Promise.all(
-      category.articles.map(async (item) => ({
-        title: item.title,
-        href: paths.docs.getHref(item.slug),
-        iconSvg: await fetchSvg(item.icon),
-      })),
+      category.articles.map(async (item) => {
+        const rawIcon = await fetchSvg(item.icon);
+        return {
+          title: item.title,
+          href: paths.docs.getHref(item.slug),
+          iconSvg: rawIcon ? sanitizeContent(rawIcon) : null,
+        };
+      }),
     );
 
     // Process subgroups and their articles
     const subgroups = await Promise.all(
       category.subgroups.map(async (subgroup) => {
         const subgroupArticles = await Promise.all(
-          subgroup.articles.map(async (item) => ({
-            title: item.title,
-            href: paths.docs.getHref(item.slug),
-            iconSvg: await fetchSvg(item.icon),
-          })),
+          subgroup.articles.map(async (item) => {
+            const rawIcon = await fetchSvg(item.icon);
+            return {
+              title: item.title,
+              href: paths.docs.getHref(item.slug),
+              iconSvg: rawIcon ? sanitizeContent(rawIcon) : null,
+            };
+          }),
         );
 
         return {
