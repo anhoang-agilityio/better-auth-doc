@@ -2,7 +2,6 @@
 
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { sanitizeContent } from '@/utils/data';
 
 type Tab = {
   value: string;
@@ -39,7 +38,7 @@ export default function CodeBlock({
         )}
         <div
           className="max-h-[600px] overflow-y-auto p-4"
-          dangerouslySetInnerHTML={{ __html: sanitizeContent(only.content) }}
+          dangerouslySetInnerHTML={{ __html: only.content }}
         />
       </Card>
     );
@@ -66,7 +65,7 @@ export default function CodeBlock({
             )}
             <div
               className="max-h-[600px] overflow-y-auto p-4"
-              dangerouslySetInnerHTML={{ __html: sanitizeContent(tab.content) }}
+              dangerouslySetInnerHTML={{ __html: tab.content }}
             />
           </TabsContent>
         ))}

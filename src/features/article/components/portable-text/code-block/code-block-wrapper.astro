@@ -2,6 +2,7 @@
 import CodeBlock from './code-block';
 
 import { highlighter, supportedLanguages, themesConfig } from '@/lib/shiki';
+import { sanitizeContent } from '@/utils/data';
 
 type CodeBlockNodeWithTabs = {
   useTabs: true;
@@ -81,7 +82,7 @@ const transformedTabs: Array<TransformedTab> = tabsInput.map((tab) => {
   return {
     value: tab.title,
     label: tab.title,
-    content: highlightedHtml,
+    content: sanitizeContent(highlightedHtml),
     filename: tab.filename,
   };
 });
