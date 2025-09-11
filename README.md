@@ -52,8 +52,8 @@ All commands should be run from the `/web` directory:
 | Command | Action |
 |:--------|:-------|
 | `pnpm install` | Install dependencies |
-| `pnpm dev` | Start development server at `localhost:4321` |
-| `pnpm build` | Build production site to `./dist/` |
+| `pnpm dev` | Start development server |
+| `pnpm build` | Build production site |
 | `pnpm preview` | Preview production build locally |
 
 ## 📁 Project Structure
@@ -93,6 +93,7 @@ web/
 ### User Experience  
 - **Dark/Light Mode**: System preference detection with manual toggle
 - **Responsive Design**: Mobile-first approach with adaptive layouts
+- **Client Router**: Smooth transition when navigating between routes
 - **Table of Contents**: Auto-generated navigation for articles
 - **Syntax Highlighting**: Shiki-powered code blocks with GitHub themes
 - **Copy to Clipboard**: One-click code copying functionality
