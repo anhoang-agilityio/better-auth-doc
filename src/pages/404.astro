@@ -1,4 +1,5 @@
 ---
+import Logo from '@/assets/logo.svg';
 import { Button } from '@/components/ui/button';
 import type { MetadataType as Metadata } from '@/components/utils/metadata';
 import { paths } from '@/config/paths';
@@ -15,22 +16,7 @@ const metadata: Metadata = {
     class="relative flex h-[calc(100vh-10px-var(--nav-height))] flex-col items-center justify-center"
   >
     <div class="mb-8">
-      <svg
-        width="60"
-        height="45"
-        viewBox="0 0 60 45"
-        fill="none"
-        class="h-10 w-10"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          fill-rule="evenodd"
-          clip-rule="evenodd"
-          d="M0 0H15V15H30V30H15V45H0V30V15V0ZM45 30V15H30V0H45H60V15V30V45H45H30V30H45Z"
-          class="fill-foreground"
-        >
-        </path>
-      </svg>
+      <Logo class="fill-foreground h-10 w-10" />
     </div>
     <h1 class="text-8xl font-normal">404</h1>
     <p class="mb-8 text-sm">Need help? Visit the docs</p>
