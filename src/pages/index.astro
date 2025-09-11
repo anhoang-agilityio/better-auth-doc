@@ -1,11 +1,12 @@
 ---
 import { CircleFadingPlus } from 'lucide-react';
 
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { CopyButton } from '@/components/ui/copy-button';
 import type { MetadataType as Metadata } from '@/components/utils/metadata';
 import { paths } from '@/config/paths';
 import BaseLayout from '@/layouts/base/index.astro';
+import { cn } from '@/lib/shadcn';
 
 const metadata: Metadata = {
   title: 'Better Auth Doc',
@@ -53,9 +54,15 @@ const metadata: Metadata = {
           </div>
 
           <div class="flex flex-col gap-4 sm:flex-row">
-            <Button size="lg" className="px-8 py-3 text-base font-medium">
-              <a href={paths.docs.getHref('introduction')}>GET STARTED</a>
-            </Button>
+            <a
+              href={paths.docs.getHref('introduction')}
+              class={cn(
+                buttonVariants({ size: 'lg' }),
+                'px-8 py-3 text-base font-medium',
+              )}
+            >
+              GET STARTED
+            </a>
           </div>
         </div>
       </div>

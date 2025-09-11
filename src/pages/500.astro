@@ -1,9 +1,10 @@
 ---
 import Logo from '@/assets/logo.svg';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import type { MetadataType as Metadata } from '@/components/utils/metadata';
 import { paths } from '@/config/paths';
 import BaseLayout from '@/layouts/base/index.astro';
+import { cn } from '@/lib/shadcn';
 
 const metadata: Metadata = {
   title: '500 - Internal Server Error | Better Auth Doc',
@@ -23,8 +24,14 @@ const metadata: Metadata = {
     <p class="text-muted-foreground mb-8 text-sm">
       Something went wrong on our end. Please try again in a moment.
     </p>
-    <Button size="lg" className="px-8 py-3 text-base font-medium">
-      <a href={paths.home.getHref()}>GO TO HOMEPAGE</a>
-    </Button>
+    <a
+      href={paths.home.getHref()}
+      class={cn(
+        buttonVariants({ size: 'lg' }),
+        'px-8 py-3 text-base font-medium',
+      )}
+    >
+      GO TO HOMEPAGE
+    </a>
   </main>
 </BaseLayout>

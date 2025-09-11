@@ -1,9 +1,10 @@
 ---
 import Logo from '@/assets/logo.svg';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import type { MetadataType as Metadata } from '@/components/utils/metadata';
 import { paths } from '@/config/paths';
 import BaseLayout from '@/layouts/base/index.astro';
+import { cn } from '@/lib/shadcn';
 
 const metadata: Metadata = {
   title: '404 - Page Not Found | Better Auth Doc',
@@ -20,8 +21,14 @@ const metadata: Metadata = {
     </div>
     <h1 class="text-8xl font-normal">404</h1>
     <p class="mb-8 text-sm">Need help? Visit the docs</p>
-    <Button size="lg" className="px-8 py-3 text-base font-medium">
-      <a href={paths.docs.getHref('introduction')}>GO TO DOCS</a>
-    </Button>
+    <a
+      href={paths.docs.getHref('introduction')}
+      class={cn(
+        buttonVariants({ size: 'lg' }),
+        'px-8 py-3 text-base font-medium',
+      )}
+    >
+      GO TO DOCS
+    </a>
   </main>
 </BaseLayout>
