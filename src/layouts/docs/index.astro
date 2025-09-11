@@ -18,7 +18,9 @@ const categoriesFromCms = await getCategoriesWithArticles();
 
 const categories: DocsNavigationCategory[] = await Promise.all(
   categoriesFromCms.map(async (category) => {
-    const rawCategoryIcon = await fetchSvg(category.icon);
+    const rawCategoryIcon = category.icon
+      ? await fetchSvg(category.icon)
+      : null;
     const categoryIconSvg = rawCategoryIcon
       ? sanitizeContent(rawCategoryIcon)
       : null;
@@ -26,7 +28,7 @@ const categories: DocsNavigationCategory[] = await Promise.all(
     // Process direct articles (without subgroup)
     const articles = await Promise.all(
       category.articles.map(async (item) => {
-        const rawIcon = await fetchSvg(item.icon);
+        const rawIcon = item.icon ? await fetchSvg(item.icon) : null;
         return {
           title: item.title,
           href: paths.docs.getHref(item.slug),
@@ -40,7 +42,7 @@ const categories: DocsNavigationCategory[] = await Promise.all(
       category.subgroups.map(async (subgroup) => {
         const subgroupArticles = await Promise.all(
           subgroup.articles.map(async (item) => {
-            const rawIcon = await fetchSvg(item.icon);
+            const rawIcon = item.icon ? await fetchSvg(item.icon) : null;
             return {
               title: item.title,
               href: paths.docs.getHref(item.slug),

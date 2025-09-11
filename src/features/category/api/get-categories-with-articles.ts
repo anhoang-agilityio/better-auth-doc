@@ -16,7 +16,7 @@ type SubgroupItem = {
 type CategoryWithArticles = {
   id: string;
   title: string;
-  icon: string;
+  icon: string | null;
   subgroups: SubgroupItem[];
   articles: ArticleItem[]; // Articles without subgroup
 };

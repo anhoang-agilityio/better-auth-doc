@@ -1,5 +1,6 @@
 import DOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
+
 /**
  * Sanitize content using JSDOM window object
  * Only works in server environment
