@@ -107,7 +107,7 @@ export const DocsNavigation = ({
               <span className="flex items-center gap-x-2">
                 {category.iconSvg ? (
                   <div
-                    className="min-w-4"
+                    className="w-4"
                     aria-hidden
                     dangerouslySetInnerHTML={{ __html: category.iconSvg }}
                   />
