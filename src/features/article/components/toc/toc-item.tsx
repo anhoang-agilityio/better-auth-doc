@@ -38,5 +38,3 @@ export const TocItem = ({ item, activeId, level, ref }: TocItemProps) => {
     </li>
   );
 };
-
-TocItem.displayName = 'TocItem';

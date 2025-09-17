@@ -22,12 +22,9 @@ type TocMobileProps = {
 export function TocMobile({ items }: TocMobileProps) {
   const [isOpen, setIsOpen] = useState(false);
   const collapsibleRef = useRef<HTMLDivElement>(null);
-  const { activeId } = useActiveHeading(items);
+  const { activeText } = useActiveHeading(items);
 
   useClickOutside(collapsibleRef, () => setIsOpen(false), isOpen);
-
-  const activeItem = items.find((item) => item.id === activeId);
-  const activeText = activeItem?.text || '';
 
   return (
     <Collapsible

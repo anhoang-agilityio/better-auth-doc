@@ -4,11 +4,8 @@ import type { TocItem } from '../types/toc';
 
 const useActiveHeading = (items: TocItem[]) => {
   const [activeId, setActiveId] = useState<string | null>(null);
-  const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   useEffect(() => {
-    const flatItems = items;
-
     // Track which headings are currently intersecting
     const intersectingHeadings = new Set<string>();
 
@@ -44,23 +41,18 @@ const useActiveHeading = (items: TocItem[]) => {
       const isAtPageBottom =
         window.innerHeight + window.scrollY >= document.body.offsetHeight - 10;
 
-      if (isAtPageBottom && flatItems.length > 0) {
+      if (isAtPageBottom && items.length > 0) {
         // If at page bottom, set the last item as active
-        const lastItem = flatItems[flatItems.length - 1];
+        const lastItem = items[items.length - 1];
         setActiveId(lastItem.id);
-        setActiveIndex(flatItems.length - 1);
       } else {
         // Find the first visible heading in the TOC order
-        const visibleHeading = flatItems.find((item) =>
+        const visibleHeading = items.find((item) =>
           intersectingHeadings.has(item.id),
         );
 
         if (visibleHeading) {
           setActiveId(visibleHeading.id);
-          const index = flatItems.findIndex(
-            (item) => item.id === visibleHeading.id,
-          );
-          setActiveIndex(index);
         }
       }
     };
@@ -77,7 +69,14 @@ const useActiveHeading = (items: TocItem[]) => {
     };
   }, [items]);
 
-  return { activeId, activeIndex };
+  // Get active item information
+  const activeItem = items.find((item) => item.id === activeId);
+  const activeText = activeItem?.text || '';
+  const activeIndex = activeId
+    ? items.findIndex((item) => item.id === activeId)
+    : -1;
+
+  return { activeId, activeIndex, activeItem, activeText };
 };
 
 export { useActiveHeading };
