@@ -41,10 +41,18 @@ export function generateId(text: string): string {
  * @returns Concatenated and trimmed text string
  */
 export function extractTextFromChildren(
-  children: Array<{ text?: string }> = [],
+  children: Array<{ text?: string; children?: Array<{ text?: string }> }> = [],
 ): string {
   return children
-    .map((child) => child.text || '')
+    .map((child) => {
+      if (child.text) {
+        return child.text;
+      }
+      if (child.children) {
+        return extractTextFromChildren(child.children);
+      }
+      return '';
+    })
     .join('')
     .trim();
 }
