@@ -1,4 +1,5 @@
 import { createHighlighter } from 'shiki';
+import type { CodeOptionsThemes, CodeToHastOptions } from 'shiki';
 
 // Supported languages for Shiki highlighting
 export const supportedLanguages: string[] = [
@@ -18,7 +19,7 @@ export const highlighter = await createHighlighter({
   themes: ['github-light', 'github-dark'],
 });
 
-export const themesConfig = {
+export const options: Omit<CodeToHastOptions, 'lang'> & CodeOptionsThemes = {
   themes: {
     light: 'github-light',
     dark: 'github-dark',
@@ -34,4 +35,11 @@ export const themesConfig = {
       '#fff': 'inherit',
     },
   },
+  transformers: [
+    {
+      pre(node) {
+        this.addClassToHast(node, 'overflow-auto');
+      },
+    },
+  ],
 };

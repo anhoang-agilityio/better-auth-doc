@@ -1,7 +1,7 @@
 ---
 import CodeBlock from './code-block';
 
-import { highlighter, supportedLanguages, themesConfig } from '@/lib/shiki';
+import { highlighter, supportedLanguages, options } from '@/lib/shiki';
 import { sanitizeContent } from '@/utils/server';
 
 type CodeBlockNodeWithTabs = {
@@ -76,7 +76,7 @@ const tabsInput = createTabsInput();
 const transformedTabs: Array<TransformedTab> = tabsInput.map((tab) => {
   const highlightedHtml = highlighter.codeToHtml(tab.code, {
     lang: tab.language,
-    ...themesConfig,
+    ...options,
   });
 
   return {
